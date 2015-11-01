@@ -1,0 +1,66 @@
+Level|FileName|FoodName|TransFoodName|Description|Category
+1|lvl1good1|White bread||Roti tawar putih adalah sumber tenaga yang baik, Dua lembar roti tawar sama dengan satu cup nasi putih.|good-bread
+1|lvl1good2|Assorted bread rolls||Roti gandum tinggi serat, baik untuk pencernaanmu.|good-bread
+1|lvl1good3|Bread with jam||Satu sendok makan selai pada roti cukup menambah tenaga untuk harimu. |good-bread
+1|lvl1good4|Bread with butter||Butter adalah bentuk olahan susu.|good-bread
+1|lvl1good5|White rice||Beras adalah bahan utama nasi putih yang juga sumber karbohidrat. Satu cup nasi putih setara dengan 4 keping biskuit.|good-rice
+1|lvl1good6|Brown rice||Beras merah adalah sumber karbohidrat sekaligus sumber serat. Serat beras merah lebih tinggi dari beras putih.|good-rice
+1|lvl1good7|Baked rice||Bubur sumsum berasal dari tepung beras  merupakan sumber karbohidrat. Bisa jadi sumber tenaga untuk harimu. |good-rice
+1|lvl1good8|Porridge||Bubur beras berasal dari beras putih merupakan sumber karbohidrat. Sajikan dengan ayam, kacang, atau telur agar lebih bervariasi.|good-rice
+1|lvl1good9|Spagetti with meat balls and fresh tomato sauce||Spagetti merupakan golongan pasta, terbuat dari gandum yang tinggi serat dan merupakan sumber karbohidrat. Satu mangkuk kecil spaghetti setara dengan satu mangkuk kecil nasi.|good-noodle
+1|lvl1good10|Chinese noodles||Mie telur merupakan sumber karbohidrat, satu mangkuk kecil mie telur setara dengan 3/4 mangkuk kecil nasi.|good-noodle
+1|lvl1good11|Mee||Mie telur merupakan sumber karbohidrat, satu mangkuk kecil kwetiau setara dengan 3/4 mangkuk kecil nasi.|good-noodle
+1|lvl1good12|Baked pasta||Pasta terbuat dari tepung gandum, baik untuk penurunan berat badan.|good-noodle
+1|lvl1good13|Oatmeal||Oatmeal adalah sumber karbohidrat yang tinggi serat, baik untuk kesehatan jantungmu.|good-cereal
+1|lvl1good14|Wholemeal biscuit||Biskuit adalah sumber karbohidrat yang baik untuk sumber tenaga.Empat keping biskuit sama dengan dua iris roti tawar.|good-cereal
+1|lvl1good15|Cornflakes||Sereal jagung merupakan sumber karbohidrat untuk tenagamu. Nilai gizi satu porsi cornflake lebih sedikit dari satu mangkuk kecil nasi.|good-cereal
+1|lvl1good16|Cereal wih milk||Sereal ditambah susu menjadi perpaduan sempurna yang baik untuk tambahan energi dan pertumbuhan tulangmu.|good-cereal
+2|lvl2good1|Grapes||Anggur merupakan sumber vitamin dan mineral. Vitamin C dan A anggur lebih sedikit dari apel dalam jumlah 100gr.|good-fruit
+2|lvl2good2|Apples||Apel juga merupakan sumber vitamin. Vitamin A dan C pada apel dengan kulit lebih tinggi daripada apel tanpa kulit.|good-fruit
+2|lvl2good3|Orange||Jeruk tinggi vitamin A dan C, kandungan vitamin A&C 100 gr jus jeruk lebih tinggi dari 100gr buah jeruk utuh.|good-fruit
+2|lvl2good4|Pineapple||Nanas juga sumber vitamin C. Namun, kandungan vitamin C jeruk, lebih tinggi dari nanas.|good-fruit
+2|lvl2good5|Fresh Orange juice||Jeruk tinggi vitamin A dan C, kandungan vitamin A&C 100 gr jus jeruk lebih tinggi dari 100gr buah jeruk utuh.|good-fruit
+2|lvl2good6|Pineapple||Nanas juga sumber vitamin C. Kandungan vitamin C mangga lebih sedikit dari nanas.|good-fruit
+2|lvl2good7|Kiwi||Pepaya sumber vitamin A yang baik. Kandungan vitamin A dalam 100gr pepaya, 17x lebih tinggi dari apel dengan kulit.|good-fruit
+2|lvl2good8|Banana||Pisang kaya mineral seperti kalium, fosfor, magnesium, dan kalsium yang baik untuk menjaga fungsi otot, otak, serta pertumbuhan tulang dan gigimu.|good-fruit
+2|lvl2good9|Celery||Bayam merupakan sumber zat besi yang baik untuk fungsi otakmu bekerja optimal.|good-vege
+2|lvl2good10|Cucumber||Kangkung merupakan sumber mineral seperti kalium, magnesium, dan natrium. Kandungan mineral bayam lebih tinggi dari natrium.|good-vege
+2|lvl2good11|Pumpkin||Kol juga mengandung vitamin dan mineral. Namun, bayam merupakan sumber vitamin dan mineral yang lebih baik dari kol.|good-vege
+2|lvl2good12|Broccoli||Brokoli kaya vitamin dan mineral. Serat brokoli lebih tinggi dibanding serat bayam.|good-vege
+2|lvl2good13|Carrot||Wortel sangat kaya vitamin A. Vitamin A dalam 100gr wortel setara dengan 300x 100gr buah apel.|good-vege
+2|lvl2good14|Green bell peppers||Terung mengandung senyawa antosianin (jenis antioksidan) yang baik untuk kesehatan jantungmu.|good-vege
+2|lvl2good15|Radish||Lobak kaya akan senyawa flavonoid yang baik untuk menjaga daya tahan tubuhmu.|good-vege
+2|lvl2good16|Onion||Bawang merupakan jenis bahan penyedap yang dapat membantu menjaga daya tahan tubuhmu.|good-vege
+3|lvl3good1|Cheese||Keju adalah jenis olahan susu yang kaya kalsium dan fosfor yang baik untuk kesehatan tulang dan gigimu.|good-dairy
+3|lvl3good2|Milk||Susu merupakan sumber protein hewani yang juga kaya kalsium dan fosfor. Susu membantumu tumbuh tinggi.|good-dairy
+3|lvl3good3|Yoghurt||Yogurt adalah jenis olahan susu yang difermentasi, yogurt kaya kalsium dan fosfor yang baik untuk kesehatan tulang dan gigimu.|good-dairy
+3|lvl3good4|Strawberry milk||Susu strawberry kaya kalsium,fosfor dan sumber protein hewani. Susu segar plain lebih baik daripada susu segar strawberry.|good-dairy
+3|lvl3good5|Beef Steak||Bakso yang disajikan bersih adalah sumber protein hewani yang baik untuk membantumu tumbuh besar. Namun, bila dikonsumsi berlebihan dapat menyebabkan kegemukan.|good-meat
+3|lvl3good6|Lamb||Daging domba tinggi protein dan lemak. Dalam jumlah yang sama, kandungan protein dan lemaknya lebih tinggi dari bakso.|good-meat
+3|lvl3good7|Chicken||Daging ayam adalah sumber protein hewani yang baik untuk memperbaiki sel-sel yang rusak. Daging ayam dengan kulit merupakan sumber golongan protein tinggi lemak dibandingkan tanpa kulit.|good-meat
+3|lvl3good8|Steamed Fish||Ikan adalah sumber protein hewani yang rendah lemak dan kaya omega 3. Baik untuk fungsi otak.|good-meat
+3|lvl3good9|Long beans||Kacang panjang adalah golongan sayuran. Kandungan serat kacang panjang lebih tinggi dari kol/kubis.|good-beans
+3|lvl3good10|Peas||Kacang polong adalah sumber protein nabati. Protein nabati merupakan sumber protein rendah lemak.|good-beans
+3|lvl3good11|French beans||Buncis adalah golongan sayuran. Kandungan serat pada buncis lebih tinggi dari bayam.|good-beans
+3|lvl3good12|Baked beans||Kacang panggang adalah sumber protein nabati. Kacang panggang lebih baik daripada kacang goreng.|good-beans
+3|lvl3good13|Beancurd||Kembang tahu merupakan olahan kacang kedelai yang juga sumber protein nabati.|good-beans
+3|lvl3good14|Scrambled eggs||Telur merupakan sumber protein hewani dan omega 3 yang baik untuk tubuh dan otakmu. Namun, ikan lebih baik daripada telur.|good-egg
+3|lvl3good15|Steamed egg with meat||Telur merupakan sumber protein hewani dan omega 3 yang baik untuk tubuh dan otakmu, apalagi ditambah dengan daging. Telur kukus lebih baik daripada telur goreng.|good-egg
+3|lvl3good16|Hard boil egg||Telur merupakan sumber protein hewani dan omega 3 yang baik untuk tubuh dan otakmu. Telur rebus lebih baik daripada telur goreng.|good-egg
+3|lvl3good17|Sunny side up||Sunny side up merupakan salah satu tipe telur goreng. Namun, tidak dimasak dengan sempurna. Telur over well lebih baik daripada sunny side up.|good-egg
+4|lvl4good1|Baked Fish and Chips set||Ikan adalah sumber protein hewani yang rendah lemak dan kaya omega 3. Baik untuk fungsi otak. Nmaun, kurang baik jika disajikan dnegan kentang goreng.|good-setmeal
+4|lvl4good2|Broiled Chicken Chop set||Daging ayam adalah sumber protein hewani yang baik untuk memperbaiki sel-sel yang rusak. Daging ayam dengan kulit merupakan sumber golongan protein tinggi lemak dibandingkan tanpa kulit. |good-setmeal
+4|lvl4good3|Baked Pasta set||Pasta terbuat dari tepung gandum, baik untuk penurunan berat badan. Lebih lengkap dan bergizi disajikan dengan sidedishsumber protein hewani.|good-setmeal
+4|lvl4good4|Baked Noodles set||Mie merupakan sumber karbohidrat, Lebih bergizi disajikan dengan ayam dan sayuran. Namun, kebersihan perlu diperhatikan.|good-setmeal
+4|lvl4good5|Steamed Rice with meat and vege||Nasi tim berasal yang beras putih merupakan sumber karbohidrat. Lebih bergizi disajikan dengan ayam sebagai pelengkap untuk memenuhi kebutuhan protein.|good-setmeal
+4|lvl4good6|Steamed Nasi Briyani set||Nasi rames merupakan nasi campur yang disajikan dengan berbagai side dish seperti telur, ayam, tempe dan sayuran. Satu piring nasi rames mampu memenuhi kebutuhan karbohidrat, protein, dan lemak.|good-setmeal
+4|lvl4good7|Steamed buns set||Ketoprak adalah jenis makanan daerah yang berisi ketupat/lontong, tahu, bihun, dan telur yang disiram saus kacang. Satu set lengkap ketoprak mampu memenuhi kebutuhan karbohidrat, protein, dan lemak. Namun, rendah serat.|good-setmeal
+4|lvl4good8|Baked potates and beans set||Gado-gado adalah jenis makanan daerah yang berisi sayuran matang ditambah kentang rebus, telur rebus, tempe, dan tahu yang disiram saus kacang. Satu set lengkap gado-gado mampu memenuhi kebutuhan karbohidrat, protein, dan lemak.|good-setmeal
+4|lvl4good9|Boiled Fish burger set||Kue lumpur yang disajikan bersih, sehat dan mengandung karbohidrat untuk sumber tenaga.|good-cookedfoodset
+4|lvl4good10|Boiled Chicken burger set||Kroket kentang yang disajikan bersih, sehat dan mengandung karbohidrat untuk sumber tenaga.|good-cookedfoodset
+4|lvl4good11|Steamed Rice set||Nasi goreng merupakan sumber karbohidrat untuk memenuhi kebutuhan energi. Nasi goreng biasanya disajikan dengan potongan sayuran dan telur yang dapat membantu memenuhi kebutuhan protein, vitamin dan mineral.|good-cookedfoodset
+4|lvl4good12|Baked rice set||Mie yang disajikan dengan kentang rebus  kubis ,tauge dan daging sapi ini mengandung karbohidrat dan protein  sebagia sumber zat tenaga dan zat pembangun.|good-cookedfoodset
+4|lvl4good13|Boiled fish set||Nasi yang disajikan dengan ikan bakar dapat menjadi variasi menu harianmu yang mengandung karbohidrat dan protein.|good-cookedfoodset
+4|lvl4good14|Steamed salmon fish with salad greens||Nasi Pecel adalah jenis makanan daerah dimana nasi disajikan dengan sayuran matang yang disiram saus kacang, biasanya ditambah kerupuk atau bawang goreng. Satu set lengkap pecel mampu memenuhi kebutuhan karbohidrat, dan serat, serta vitamin dan mineral.|good-cookedfoodset
+4|lvl4good15|Steamed fish set||Nasi yang disajikan dengan pepes ikan dapat menjadi variasi menu harianmu yang mengandung karbohidrat dan protein. Pepes ikan lebih sehat dari ikan bakar.|good-cookedfoodset
+4|lvl4good16|Steamed chicken set||Nasi yang disajikan dengan sup ayam yang ditambah sayuran dapat menjadi variasi menu harianmu yang mengandung karbohidrat dan protein, vitamin, dan mineral.|good-cookedfoodset
