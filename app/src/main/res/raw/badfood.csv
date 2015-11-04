@@ -1,0 +1,51 @@
+FileName|FoodName|TransFoodName|Description|Category
+bad1|Cheese potato chips|Cilok|Cilok (aci dicolok) yang banyak dijual di pinggir jalan kurang bersih dan miskin kandungan gizi. Tidak baik untuk kesehatan dan pertumbuhan.|bad-fastfood
+bad2|Hawaiian pizza|Cireng|Cireng (Aci digoreng) yang banyak dijual di pinggir jalan kurang bersih dan miskin kandungan gizi. Tidak baik untuk kesehatan dan pertumbuhan.|bad-fastfood
+bad3|French fries|Sosis goreng|Sosis terlalu tinggi lemak, dapat menyebabkan kegemukan. Berat badan ideal dapat membantu menyehatkan jantung.|bad-fastfood
+bad4|Fried Chicken wings|Snack gurih crispy kemasan|Chiki terlalu tinggi sodium yang dapat mengganggu kesehatan dan fungsi otak.|bad-fastfood
+bad5|Coke|Permen|Permen mengandung banyak gula yang kurang baik untuk kesehatan gigi.|bad-fastfood
+bad6|Coffee|Minuman serbuk instan|Minuman manis dalam kemasan (pabrikan) mengandung pemanis buatan yang bila kandungannya berlebihan dapat menyebabkan radang tenggorokan. Jus buah asli lebih sehat daripada minuman serbuk instan.|bad-others
+bad7|Chocolates|Permen karet|Permen mengandung banyak gula yang kurang baik untuk kesehatan gigi.|bad-sweetfood
+bad8|Candy floss||Bakso goreng (Basreng) yang banyak dijual di pinggir jalan kurang bersih, tinggi lemak dan miskin kandungan gizi. Tidak baik untuk kesehatan dan pertumbuhan.|bad-sweetfood
+bad9|Sweets|Basreng|Bakso cilok (Baslok) yang banyak dijual di pinggir jalan kurang bersih dan miskin kandungan gizi. Tidak baik untuk kesehatan dan pertumbuhan.|bad-sweetfood
+bad10|Deep fried curry puff|Baslok|Bolu instan mengandung bahan tambahan pangan yang berbahaya bagi kesehatan bila digunakan jangka panjang.|bad-fastfood
+bad11|Deep fried fish balls|Bolu kemasan|Sosis terlalu tinggi lemak, dapat menyebabkan kegemukan. Kegemukan dapat mengganggu kesehatan jantung.|bad-fastfood
+bad12|Lollipops|Ayam krispi cepat saji|Kripik singkong kemasan mengandung bahan penyedap yang terlalu tinggi, dapat mengganggu penyerapan makanan dan fungsi otak.|bad-sweetfood
+bad13|Candies|Kripik kemasan|Konsumsi keripik berlebihan, dapat menyebabkan iritasi kerongkongan.|bad-sweetfood
+bad14|Doughnuts|Wafer|Wafer dalam kemasan miskin vitamin dan mineral. Sepotong roti selai lebih baik daripada satu bungkus wafer.|bad-sweetfood
+bad15|Gassy orange drink|Gorengan pinggir jalan|Gorengan yang tidak bersih dan terlalu berlemak, dapat menyebabkan kegemukan. Tidak baik untuk kesehatan jantung.|bad-others
+bad16|Canned sardines|Es potong|Es potong miskin vitamin dan mineral. Segelas susu lebih baik untuk tulang dan gigi daripada sepotong es.|bad-others
+bad17|Canned pickles|Es mambo|Es potong miskin vitamin dan mineral. Segelas susu lebih baik untuk tulang dan gigi daripada sepotong es.|bad-others
+bad18|Canned fruits|Es lilin|Es lilin miskin vitamin dan mineral. Segelas susu lebih baik untuk tulang dan gigi daripada sepotong es.|bad-others
+bad19|Pickled olive|Kentang goreng cepat saji|Sosis terlalu tinggi lemak, dapat menyebabkan kegemukan. Kegemukan dapat mengganggu kesehatan jantung.|bad-others
+bad20|Onion rings|Bawang bombay goreng|Bawang bombay yang digoreng banyak menyerap lemak, dapat menyebabkan kegemukan yang mengganggu kesehatan jantung.|bad-fastfood
+bad21|Banana boat|Minuman bersoda|Mengandung asam sitrat yang merusak gigi serta dapat mengiritasi lambung|bad-others
+bad22|Popsicle|Permen lolipop|Permen lolipop vitamin dan mineral dan tinggi gula yang dapat merusak gigi dan menyebabkan radang teggorokan.|bad-others
+bad23|Ice cream cone|Dodol|Dodol miskin vitamin dan mineral dan tinggi gula. Sepotong kue bolu lebih baik daripada semangkuk dodol.|bad-sweetfood
+bad24|Ice cream bread|Minuman karbonasi|Mengandung asam sitrat yang merusak gigi serta dapat mengiritasi lambung|bad-sweetfood
+bad25|Cheesecake|Stik keju|Cheese stick kemasan mengandung bahan penyedap yang terlalu tinggi, dapat mengganggu penyerapan makanan dan fungsi otak.|bad-sweetfood
+bad26|Chendol|Es krim|Es krim tinggi gula sehingga dapat menyebabkan gigi berlubang dan kegemukan.|bad-sweetfood
+bad27|Cheeseburger|Peyek|Konsumsi peyek atau kerupuk berlebihan, dapat menyebabkan iritasi kerongkongan.|bad-fastfood
+bad28|Fried chicken nuggets|Kue Leker|Kue leker kandungan gizinya rendah, dan tinggi gula yang dapat menyebabkan gigi berlubang jika dikonsumsi berlebihan.|bad-fastfood
+bad29|Popcorn|Brondong jagung|Cheese stick kemasan mengandung bahan penyedap yang terlalu tinggi, dapat mengganggu penyerapan makanan dan fungsi otak.|bad-sweetfood
+bad30|Chocolate cake|Kue coklat|Kue leker mengandung gula tinggi yang dapat menyebabkan gigi berlubang jika dikonsumsi berlebihan.|bad-sweetfood
+bad31|Bacon strips|Permen jelly|Permen jelly miskin vitamin dan mineral dan tinggi gula yang dapat merusak gigi dan menyebabkan radang teggorokan.|bad-fastfood
+bad32|Macaroni and cheese|Coklat batang|Permen jelly miskin vitamin dan mineral dan tinggi gula yang dapat merusak gigi dan menyebabkan radang teggorokan.|bad-others
+bad33|Instant noodles|Mie instan|Mie instan mengandung bahan penyedap dan pengawet yang tinggi, dapat mengganggu penyerapan makanan dan fungsi otak jika dikonsumsi berlebihan.|bad-others
+bad34|Cup noodles|Mie instan cup|Mie cup instan mengandung bahan penyedap dan pengawet yang tinggi, dapat mengganggu penyerapan makanan dan fungsi otak. Kemasan panas juga tidak aman bagi kesehatan.|bad-others
+bad35|Sausages|Sosis dibalut mie|Sosis dengan balutan mie mengandung banyak lemak yang dapatmenyebabkan iritasi kerongkongan dan kegemukan bila dikonsumsi berlebihan.|bad-others
+bad36|Vege pizza|Pizza|Pizza terlalu tinggi kalori, dapat menyebabkan kegemukan. Kegemukan dapat mengganggu kesehatan jantungPizza terlalu tinggi kalori, dapat menyebabkan kegemukan. Kegemukan dapat mengganggu kesehatan jantung|bad-others
+bad37|Cupcake|tempura dengan saus bubuk|Tempura digoreng dengan minyak banyak sehingga mengandung banyak lemak yang dapatmenyebabkan iritasi kerongkongan dan kegemukan bila dikonsumsi berlebihan.|bad-sweetfood
+bad38|Sundae|Minuman dalam kemasan|Minuman dalam kemasan (pabrikan) mengandung pengawet dan pemanis buatan yang bila kandungannya berlebihan dapat menyebabkan radang tenggorokan. Jus buah asli lebih sehat daripada minuman serbuk instan.|bad-sweetfood
+bad39|Bubble tea|Bubble tea|Bubble tea biasanya mengandung gula tinggi yang dapat menyebabkan gigi berlubang jika dikonsumsi berlebihan.|bad-sweetfood
+bad40|Chicken satay|Sate ayam|Sate dengan jeroan yang tinggi lemak dapat menyebabkan kegemukan dan mengganggu kesehatan jantung. Disamping itu tidak memenuhi keanekaragaman makanan.|bad-others
+bad41|Chicken kebab|Kebab ayam|Sosis terlalu tinggi lemak, dapat menyebabkan kegemukan. Kegemukan dapat mengganggu kesehatan jantung.|bad-others
+bad42|Cream puff|sate usus|Sate usus terlalu tinggi lemak, dapat menyebabkan kegemukan. Kegemukan dapat mengganggu kesehatan jantung.|bad-others
+bad43|Tuna puff|Mie lidi|Mie lidi miskin zat gizi dan banyak mengandung bahan penyedap tinggi yang dapat mengganggu penyerapan makanan dan fungsi otak.|bad-others
+bad44|Meatloaf|Gulali|Kue-kue biasanya mengandung gula tinggi yang dapat menyebabkan gigi berlubang dan iritasi kerongkongan jika dikonsumsi berlebihan.|bad-others
+bad45|Rainbow cake|Kue pelangi|Kue-kue biasanya mengandung gula tinggi yang dapat menyebabkan gigi berlubang jika dikonsumsi berlebihan.|bad-others
+bad46|Fried drumstick|paha ayam goreng|Paha ayam goreng (fast food) tinggi lemak, dapat menyebabkan kegemukan. Lemak berlebihan tidak baik untuk jantung.Paha ayam goreng (fast food) tinggi lemak, dapat menyebabkan kegemukan. Lemak berlebihan tidak baik untuk jantung.|bad-fastfood
+bad47|Double cheese burger|Burger keju|Burger terlalu tinggi lemak dan kalori, dapat menyebabkan kegemukan. Kegemukan dapat mengganggu kesehatan jantung.|bad-fastfood
+bad48|Mee Goreng|Mie kering (kremes)|Mie cup instan mengandung bahan penyedap yang tinggi, dapat mengganggu penyerapan makanan dan fungsi otak. |bad-others
+bad49|Lontong|Jelly berwarna mencolok|Makanan dengan warna mencolok mengandung pewarna buatan yang dapat mengiritasi saluran cerna|bad-others
+bad50|Mee Rebus|Stik kentang|Stik kentang banyak menyerap minyak dan mengandung bahan penyedap tinggi yang dapat mengganggu penyerapan makanan dan fungsi otak.|bad-others
