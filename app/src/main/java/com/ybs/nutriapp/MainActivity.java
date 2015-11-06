@@ -23,7 +23,6 @@ public class MainActivity extends Activity
     PopupWindow popUp;
     LinearLayout mainLayout;
     TextView tv;
-    public static ProgressBar pbr;
     // This is the entry point to our game
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +89,22 @@ public class MainActivity extends Activity
             tv.append("\n");
             tv.append("Food Battle juga dapat dipelajari oleh orang tua untuk membantu anak dan anggota keluarga dalam ");
             tv.append("memilih dan mengkonsumsi makanan sehat. ");
+            tv.append("\n");
+            tv.append("Cara Bermain");
+            tv.append("1. Ketika pemain mulai Food Battle, 2 gambar makanan acak akan ditampilkan, makanan yang sehat dan tidak sehat.\n");
+            tv.append("Pilih makanan yang sehat untuk memenangkan Food Battle!");
+            tv.append("Setiap kamu memilih makanan yang sehat, power akan meningkat!");
+            tv.append("Kalau kamu memilih makanan yang tidak sehat, power akan tetap seperti itu!");
+            tv.append("Setelah kamu selesai membaca pesan tentang makanan, sentuh layar lagi untuk memainkan set berikutnya.");
+            tv.append("Ada 10 pasang makanan acak. Untuk memenangkan trofi permainan, kamu perlu memilih semua 10 makanan yang baik!");
+            tv.append("Tapi, jangan khawatir jika kamu sudah memilih beberapa makanan yang buruk, setidaknya kamu bisa belajar lebih banyak tentang yang makanan yang sebaiknya dihindari.");
+            tv.append("Pada akhir 10 putaran, seorang dewasa sebaiknya menemani anak mereview kembali kandungan gizi dari 10 makanan yang dipilih di halaman ringkasan");
+            tv.append("Orang dewasa dapat membaca rincian dengan menyentuh setiap makanan yang dipilih, yang akan menampilkan catatan singkat.");
+            tv.append("Ketika semua catatan telah dibuka, tombol Replay akan muncul.");
+            tv.append("Replay Food Battle dan berusaha lebih keras babak berikutnya!");
+            tv.append("Petunjuk # 1: makanan dan minuman baru dapat tampil di babak berikutnya!");
+            tv.append("Petunjuk # 2: Ada piala yang berbeda untuk dimenangkan juga, ayo semangat memilih makanan sehat!");
+
         }
         GradientDrawable gd = new GradientDrawable();
         gd.setColor(Color.BLACK); // Changes this drawbale to use a single color instead of a gradient
@@ -121,7 +136,7 @@ public class MainActivity extends Activity
                 (Button)findViewById(R.id.buttonBahasa);
         // Listen for clicks
         buttonBahasa.setOnClickListener(this);
-        pbr = (ProgressBar)findViewById(R.id.progressbar);
+
     }
 
     @Override
@@ -163,7 +178,6 @@ public class MainActivity extends Activity
             startActivity(i);
             return;
         }
-
         Intent i = new Intent(this, GameActivity.class);
 // Start our GameActivity class via the Intent
         startActivity(i);

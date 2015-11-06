@@ -9,10 +9,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Parcel;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -82,12 +84,12 @@ public class TDView extends SurfaceView implements Runnable {
     private List<FoodItem> clickedItems = new ArrayList<>();
     LinearLayout mainLayout;
     ProgressBar pbr;
-
-    TDView(Context context, int x, int y) {
+    TDView(Context context, int x, int y, ProgressBar pbr) {
         super(context);
         this.context  = context;
         DataCache.init(context);
         FoodItem.maxX=x;
+        this.pbr=pbr;
         // This SoundPool is deprecated but don't worry
         soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC,0);
         try{
@@ -120,7 +122,6 @@ public class TDView extends SurfaceView implements Runnable {
         // Initialize our drawing objects
         ourHolder = getHolder();
         paint = new Paint();
-        pbr = new ProgressBar(context);
 
 
 
@@ -215,6 +216,14 @@ public class TDView extends SurfaceView implements Runnable {
     private void draw() {
         if(gameEnded) return;
         if (ourHolder.getSurface().isValid()) {
+            if(view.equals("Trophy")) {
+                canvas = ourHolder.lockCanvas();
+                canvas.drawColor(Color.argb(255, 0, 0, 0));
+                Bitmap endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy);
+                canvas.drawBitmap(endBitMap, 400, 300, paint);
+                ourHolder.unlockCanvasAndPost(canvas);
+                return;
+            }
             if(view.equals("SelectedItemsView") && levelRunning>=4) {
                 canvas = ourHolder.lockCanvas();
                 canvas.drawColor(Color.argb(255, 0, 0, 0));
@@ -318,26 +327,18 @@ public class TDView extends SurfaceView implements Runnable {
                         itemsDisplayed.add(bag);
                 if(replayLevelButton==null){
                     Bitmap replayBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.replaylevel);
-                    replayLevelButton = new Button(900, 650, Bitmap.createScaledBitmap(replayBitMap,
+                    replayLevelButton = new Button(900, 640, Bitmap.createScaledBitmap(replayBitMap,
                             replayBitMap.getWidth(),
                             replayBitMap.getHeight(),
                             false));
                 }
-                pbr = MainActivity.pbr;
-
-
-                pbr.setProgress(20);
-                pbr.incrementProgressBy(10);
-                //pbr.setX(600);
-                //pbr.setY(600);
-                pbr.draw(canvas);
                 if(!view.equals("ItemDetails") && !(levelRunning==1 && itemsDisplayed.size()==1)) {
                     canvas.drawBitmap(replayLevelButton.bitMap, replayLevelButton.x, replayLevelButton.y, paint);
                 }
 
                 if(!backMap.containsKey(view)) {
                     Bitmap backBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.back_button);
-                    Button backButton = new Button(800, 550, Bitmap.createScaledBitmap(backBitMap,
+                    Button backButton = new Button(800, 640, Bitmap.createScaledBitmap(backBitMap,
                             replayLevelButton.bitMap.getHeight(),
                             replayLevelButton.bitMap.getHeight(),
                             false));
@@ -346,7 +347,11 @@ public class TDView extends SurfaceView implements Runnable {
                 if(!(levelRunning==1 && itemsDisplayed.size()==1)) {
                     canvas.drawBitmap(backMap.get(view).bitMap, backMap.get(view).x, backMap.get(view).y, paint);
                 }
-
+                int progress=0;
+                for (FoodItem fItem : selectedItems) {
+                    if(fItem.isGoodItem()) progress+=10;
+                }
+                pbr.setProgress(progress);
                 if (!gameEnded) {
                             // Draw the hud
                             paint.setTextAlign(Paint.Align.LEFT);
@@ -363,12 +368,11 @@ public class TDView extends SurfaceView implements Runnable {
                         }
                         // Unlock and draw the scene
                         ourHolder.unlockCanvasAndPost(canvas);
-
                 }
             else if (view.equals("SelectedItemsView")) {
                 canvas = ourHolder.lockCanvas();
                 canvas.drawColor(Color.argb(255, 0, 0, 0));
-                int starterrX = 50;
+                int starterrX = 10;
                 boolean allGood=true;
 
                 canvas.drawText("These are your selected good foods. Click on each image to read more before you continue!", 200, 50,
@@ -420,8 +424,14 @@ public class TDView extends SurfaceView implements Runnable {
                     backMap.put(view, backButton);
                 }*/
                 //canvas.drawBitmap(backMap.get(view).bitMap, backMap.get(view).x, backMap.get(view).y, paint);
-                if(clickedItems.size()==5) {
-                    canvas.drawBitmap(replayLevelButton.bitMap, replayLevelButton.x, replayLevelButton.y, paint);
+                int progress=0;
+                for (FoodItem fItem : selectedItems) {
+                    if(fItem.isGoodItem()) progress+=10;
+                }
+                pbr.setProgress(progress);
+                canvas.drawBitmap(replayLevelButton.bitMap, replayLevelButton.x, replayLevelButton.y, paint);
+                /*if(clickedItems.size()==5) {
+
                     if (allGood) {
                         Bitmap nextBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.nextlevel);
                         nextButton = new Button(1050, 550, Bitmap.createScaledBitmap(nextBitMap,
@@ -430,7 +440,7 @@ public class TDView extends SurfaceView implements Runnable {
                                 false));
                         canvas.drawBitmap(nextButton.bitMap, nextButton.x, nextButton.y, paint);
                     }
-                }
+                }*/
                 ourHolder.unlockCanvasAndPost(canvas);
             } else if(view.equals("ItemDetails")) {
                 if(itemForDetail==null || itemForDetail.getBitmap()==null) return;
@@ -481,7 +491,7 @@ public class TDView extends SurfaceView implements Runnable {
                 }
                 if(!backMap.containsKey(view)) {
                     Bitmap backBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.back_button);
-                    Button backButton = new Button(800, 550, Bitmap.createScaledBitmap(backBitMap,
+                    Button backButton = new Button(800, 640, Bitmap.createScaledBitmap(backBitMap,
                             replayLevelButton.bitMap.getHeight(),
                             replayLevelButton.bitMap.getHeight(),
                             false));
@@ -564,6 +574,47 @@ public class TDView extends SurfaceView implements Runnable {
                         lock.notifyAll();
                     }
                 } else if(gameEnded) {
+                    return true;
+                }
+                if(view.equals("Trophy")) {
+                    view="";
+                    List<Bag> bags = DataCache.getRandomBagList(levelRunning, 10);
+                    for (Bag bagg : bags){
+                        GoodFoodItem gfi = bagg.getGoodFoodItem();
+                        gfi.getFileName();
+                        Class klass = R.drawable.class;
+                        Field fld = klass.getDeclaredField(gfi.getFileName());
+                        int resource_id = (Integer)fld.get(null);
+                        Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
+                        double htConversion = 1.0;
+                        double widthConversion = 1.0;
+                        if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
+                        if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                        gfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
+                                (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
+                                (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                false));
+                        BadFoodItem bfi = bagg.getBadFoodItem();
+                        fld = klass.getDeclaredField(bfi.getFileName());
+                        resource_id = (Integer)fld.get(null);
+                        bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
+                        htConversion = 1.0;
+                        widthConversion = 1.0;
+                        if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
+                        if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                        bfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
+                                (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
+                                (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                false));
+                    }
+                    itemsToBeDisplayed.addAll(bags);
+                    itemsDisplayed.clear();
+                    selectedItems.clear();
+                    clickedItems.clear();
+                    view="SelectionView";
+                    synchronized (lock) {
+                        lock.notifyAll();
+                    }
                     return true;
                 }
                 if(view.equals("SelectionView")) {
@@ -838,18 +889,6 @@ public class TDView extends SurfaceView implements Runnable {
                             }
                             return true;
                         }
-                        boolean allGood=true;
-                        for (FoodItem obj : selectedItems) {
-                            if (!obj.isGoodItem()) {
-                                allGood = false;
-                            }
-                        }
-                        if(clickedItems.size()<5 || !allGood) {
-                            synchronized (lock) {
-                                lock.notifyAll();
-                            }
-                            return true;
-                        }
                         view="";
                         List<Bag> bags = DataCache.getRandomBagList(++levelRunning, 10);
                         for (Bag bag : bags){
@@ -897,7 +936,8 @@ public class TDView extends SurfaceView implements Runnable {
                             lock.notifyAll();
                         }
                     }else if (replayLevelButton.isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
-                        if(clickedItems.size()<5) {
+                        if(pbr.getProgress()==100){
+                            view="Trophy";
                             synchronized (lock) {
                                 lock.notifyAll();
                             }
