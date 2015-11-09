@@ -45,18 +45,18 @@ public class GameActivity extends Activity {
         // Also passing in the screen resolution to the constructor
         ProgressBar pbr = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
         pbr.setIndeterminate(false);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(200, 50);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(500, 50);
         params.setMargins(50, 650, 100, 100);
         pbr.setLayoutParams(params);
         pbr.setMax(100);
         ShapeDrawable pgDrawable = new ShapeDrawable(new RoundRectShape(null,     null, null));
 
         // Sets the progressBar color
-        pgDrawable.getPaint().setColor(Color.GREEN);
+        pgDrawable.getPaint().setColor(Color.parseColor("#2b9bcf"));
 
         // Adds the drawable to your progressBar
         ClipDrawable progress = new ClipDrawable(pgDrawable, Gravity.LEFT, ClipDrawable.HORIZONTAL);
-        pbr.setProgressDrawable(progress);pbr.setBackgroundColor(Color.RED);
+        pbr.setProgressDrawable(progress);pbr.setBackgroundColor(Color.parseColor("#898f92"));
         gameView = new TDView(this, size.x, size.y, pbr);
         // Make our gameView the view for the Activity
         //setContentView(gameView);

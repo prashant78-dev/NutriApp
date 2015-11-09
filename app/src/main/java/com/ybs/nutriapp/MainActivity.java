@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
@@ -23,6 +25,7 @@ public class MainActivity extends Activity
     PopupWindow popUp;
     LinearLayout mainLayout;
     TextView tv;
+    Drawable background;
     // This is the entry point to our game
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +35,20 @@ public class MainActivity extends Activity
         setContentView(R.layout.activity_main);
 
         // Get a reference to the button in our layout
-        final Button buttonPlay =
-                (Button)findViewById(R.id.buttonPlay);
+        final ImageButton buttonPlay =
+                (ImageButton)findViewById(R.id.buttonPlay);
         // Listen for clicks
         buttonPlay.setOnClickListener(this);
         // Get a reference to the button in our layout
-        final Button buttonAbout =
-                (Button)findViewById(R.id.buttonAbout);
+        final ImageButton buttonAbout =
+                (ImageButton)findViewById(R.id.buttonAbout);
         // Listen for clicks
         popUp = new PopupWindow(this);
         LinearLayout layout = new LinearLayout(this);
         tv = new TextView(this);
 
-        tv.setTextSize(25);
+        tv.setTextSize(10);
+        tv.setBackgroundColor(Color.parseColor("#30abb0"));
         tv.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         mainLayout = new LinearLayout(this);
 

@@ -260,7 +260,7 @@ public class TDView extends SurfaceView implements Runnable {
 
                 // White specs of dust
                 paint.setColor(Color.argb(255, 255, 255, 255));
-                paint.setTextSize(25);
+                paint.setTextSize(10);
                         // Draw the player
                         Bag bag = itemsToBeDisplayed.remove(0);
 
