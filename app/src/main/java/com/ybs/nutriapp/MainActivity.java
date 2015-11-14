@@ -1,20 +1,22 @@
 package com.ybs.nutriapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 
@@ -25,7 +27,6 @@ public class MainActivity extends Activity
     PopupWindow popUp;
     LinearLayout mainLayout;
     TextView tv;
-    Drawable background;
     // This is the entry point to our game
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +44,22 @@ public class MainActivity extends Activity
         final ImageButton buttonAbout =
                 (ImageButton)findViewById(R.id.buttonAbout);
         // Listen for clicks
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.about_the_game, null); //custom_layout is your xml file which contains popuplayout
         popUp = new PopupWindow(this);
-        LinearLayout layout = new LinearLayout(this);
-        tv = new TextView(this);
 
-        tv.setTextSize(10);
-        tv.setBackgroundColor(Color.parseColor("#30abb0"));
+        ScrollView layout = (ScrollView)view.findViewById(R.id.aboutthegamescrollview);
+        layout.setScrollbarFadingEnabled(false);
+        layout.setVerticalScrollBarEnabled(true);
+        layout.setVerticalFadingEdgeEnabled(false);
+        tv = (TextView)view.findViewById(R.id.aboutthegame);
+
+        tv.setTextSize(25);
         tv.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+
+        tv.setMovementMethod(ScrollingMovementMethod.getInstance());
+        tv.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
+        tv.setVerticalScrollBarEnabled(true);
         mainLayout = new LinearLayout(this);
 
         final boolean click = true;
@@ -70,7 +80,6 @@ public class MainActivity extends Activity
         });*/
         ViewGroup.LayoutParams params= new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        layout.setOrientation(LinearLayout.VERTICAL);
         if(language.equals("English")) {
             tv.setText("For Children ");
             tv.append("\n");
@@ -96,38 +105,35 @@ public class MainActivity extends Activity
             tv.append("\n");
             tv.append("Cara Bermain");
             tv.append("1. Ketika pemain mulai Food Battle, 2 gambar makanan acak akan ditampilkan, makanan yang sehat dan tidak sehat.\n");
-            tv.append("Pilih makanan yang sehat untuk memenangkan Food Battle!");
-            tv.append("Setiap kamu memilih makanan yang sehat, power akan meningkat!");
-            tv.append("Kalau kamu memilih makanan yang tidak sehat, power akan tetap seperti itu!");
-            tv.append("Setelah kamu selesai membaca pesan tentang makanan, sentuh layar lagi untuk memainkan set berikutnya.");
-            tv.append("Ada 10 pasang makanan acak. Untuk memenangkan trofi permainan, kamu perlu memilih semua 10 makanan yang baik!");
-            tv.append("Tapi, jangan khawatir jika kamu sudah memilih beberapa makanan yang buruk, setidaknya kamu bisa belajar lebih banyak tentang yang makanan yang sebaiknya dihindari.");
-            tv.append("Pada akhir 10 putaran, seorang dewasa sebaiknya menemani anak mereview kembali kandungan gizi dari 10 makanan yang dipilih di halaman ringkasan");
-            tv.append("Orang dewasa dapat membaca rincian dengan menyentuh setiap makanan yang dipilih, yang akan menampilkan catatan singkat.");
-            tv.append("Ketika semua catatan telah dibuka, tombol Replay akan muncul.");
-            tv.append("Replay Food Battle dan berusaha lebih keras babak berikutnya!");
-            tv.append("Petunjuk # 1: makanan dan minuman baru dapat tampil di babak berikutnya!");
-            tv.append("Petunjuk # 2: Ada piala yang berbeda untuk dimenangkan juga, ayo semangat memilih makanan sehat!");
-
+            tv.append("Pilih makanan yang sehat untuk memenangkan Food Battle!\n");
+            tv.append("Setiap kamu memilih makanan yang sehat, power akan meningkat!\n");
+            tv.append("Kalau kamu memilih makanan yang tidak sehat, power akan tetap seperti itu!\n");
+            tv.append("Setelah kamu selesai membaca pesan tentang makanan, sentuh layar lagi untuk memainkan set berikutnya.\n");
+            tv.append("Ada 10 pasang makanan acak. Untuk memenangkan trofi permainan, kamu perlu memilih semua 10 makanan yang baik!\n");
+            tv.append("Tapi, jangan khawatir jika kamu sudah memilih beberapa makanan yang buruk, setidaknya kamu bisa belajar lebih banyak tentang yang makanan yang sebaiknya dihindari.\n");
+            tv.append("Pada akhir 10 putaran, seorang dewasa sebaiknya menemani anak mereview kembali kandungan gizi dari 10 makanan yang dipilih di halaman ringkasan\n");
+            tv.append("Orang dewasa dapat membaca rincian dengan menyentuh setiap makanan yang dipilih, yang akan menampilkan catatan singkat.\n");
+            tv.append("Ketika semua catatan telah dibuka, tombol Replay akan muncul.\n");
+            tv.append("Replay Food Battle dan berusaha lebih keras babak berikutnya!\n");
+            tv.append("Petunjuk # 1: makanan dan minuman baru dapat tampil di babak berikutnya!\n");
+            tv.append("Petunjuk # 2: Ada piala yang berbeda untuk dimenangkan juga, ayo semangat memilih makanan sehat!\n");
         }
         GradientDrawable gd = new GradientDrawable();
         gd.setColor(Color.BLACK); // Changes this drawbale to use a single color instead of a gradient
         gd.setCornerRadius(5);
         gd.setStroke(1, Color.WHITE);
         //tv.setBackgroundDrawable(gd);
-        layout.addView(tv, params);
+        //layout.addView(tv, params);
 
-        Button okButton = new Button(this);
+        Button okButton = (Button)view.findViewById(R.id.buttonOK);
         okButton.setText("OK");
-        okButton.setX(325);
-        okButton.setY(50);
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popUp.dismiss();
             }
         });
-        layout.addView(okButton, 50, 50);
+        //layout.addView(okButton, 50, 50);
         layout.setBackgroundDrawable(gd);
         popUp.setContentView(layout);
 
@@ -140,7 +146,6 @@ public class MainActivity extends Activity
                 (Button)findViewById(R.id.buttonBahasa);
         // Listen for clicks
         buttonBahasa.setOnClickListener(this);
-
     }
 
     @Override
@@ -182,6 +187,7 @@ public class MainActivity extends Activity
             startActivity(i);
             return;
         }
+
         Intent i = new Intent(this, GameActivity.class);
 // Start our GameActivity class via the Intent
         startActivity(i);
@@ -197,7 +203,7 @@ public class MainActivity extends Activity
         @Override
         public void onClick(View v) {
                 popUp.showAtLocation(mainLayout, Gravity.CENTER, 10, 10);
-                popUp.update(50, 50, 700, 400);
+                popUp.update(50, 50, 800, 400);
         }
     }
 }

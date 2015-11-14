@@ -17,7 +17,8 @@
         android:layout_alignParentEnd="true"
         android:layout_marginRight="100dp"
         android:layout_marginEnd="127dp"
-        android:layout_marginBottom="550dp" />
+        android:layout_marginBottom="550dp"
+        android:visibility="invisible" />
 
     <Button
         android:layout_width="wrap_content"
@@ -31,23 +32,6 @@
         android:layout_marginEnd="127dp"
         android:layout_marginBottom="600dp"
         android:visibility="invisible"/>
-
-
-    <ProgressBar
-        android:id="@+id/progressbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="600dip"
-        android:layout_marginRight="700dp"
-        android:layout_marginEnd="127dp"
-        android:layout_marginBottom="200dp"
-        android:layout_gravity="center"
-        android:minWidth="200dip"
-        android:minHeight="50dip"
-        android:max="100"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:visibility="invisible"/>
-
 
     <ImageSwitcher
         android:layout_width="wrap_content"

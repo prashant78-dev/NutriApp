@@ -9,12 +9,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.os.Parcel;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -22,9 +20,11 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -33,8 +33,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.ybs.nutriapp.R;
 
 public class TDView extends SurfaceView implements Runnable {
 
@@ -134,9 +132,9 @@ public class TDView extends SurfaceView implements Runnable {
         //int numSpecs = 40;
 
         //for (int i = 0; i < numSpecs; i++) {
-            // Where will the dust spawn?
-            //SpaceDust spec = new SpaceDust(x, y);
-            //dustList.add(spec);
+        // Where will the dust spawn?
+        //SpaceDust spec = new SpaceDust(x, y);
+        //dustList.add(spec);
         //}
 
         // Load fastest time
@@ -165,40 +163,40 @@ public class TDView extends SurfaceView implements Runnable {
         // Play the start sound
 
         try {
-        soundPool.play(start, 1, 1, 0, 0, 1);
-        List<Bag> bags = DataCache.getRandomBagList(1, 10);
-        for (Bag bag : bags){
-            GoodFoodItem gfi = bag.getGoodFoodItem();
-            Class klass = R.drawable.class;
-            Field fld = klass.getDeclaredField(gfi.getFileName());
-            int resource_id = (Integer)fld.get(null);
-            Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
-            double htConversion = 1.0;
-            double widthConversion = 1.0;
-            if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-            if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
-            gfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                    (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                    (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
-                    false));
-            BadFoodItem bfi = bag.getBadFoodItem();
-            fld = klass.getDeclaredField(bfi.getFileName());
-            resource_id = (Integer)fld.get(null);
-            bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
-            htConversion = 1.0;
-            widthConversion = 1.0;
-            if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-            if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
-            bfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                    (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                    (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
-                    false));
-        }
-        itemsToBeDisplayed.addAll(bags);
+            soundPool.play(start, 1, 1, 0, 0, 1);
+            List<Bag> bags = DataCache.getRandomBagList(1, 10);
+            for (Bag bag : bags){
+                GoodFoodItem gfi = bag.getGoodFoodItem();
+                Class klass = R.drawable.class;
+                Field fld = klass.getDeclaredField(gfi.getFileName());
+                int resource_id = (Integer)fld.get(null);
+                Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
+                double htConversion = 1.0;
+                double widthConversion = 1.0;
+                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
+                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                gfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
+                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
+                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                        false));
+                BadFoodItem bfi = bag.getBadFoodItem();
+                fld = klass.getDeclaredField(bfi.getFileName());
+                resource_id = (Integer)fld.get(null);
+                bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
+                htConversion = 1.0;
+                widthConversion = 1.0;
+                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
+                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                bfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
+                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
+                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                        false));
+            }
+            itemsToBeDisplayed.addAll(bags);
 
-        levelRunning=1;
-        gameEnded = false;
-        soundPool.play(start, 1, 1, 0, 0, 1);
+            levelRunning=1;
+            gameEnded = false;
+            soundPool.play(start, 1, 1, 0, 0, 1);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -207,7 +205,7 @@ public class TDView extends SurfaceView implements Runnable {
     @Override
     public void run() {
         while (playing) {
-           //update();
+            //update();
             draw();
             control();
         }
@@ -221,6 +219,9 @@ public class TDView extends SurfaceView implements Runnable {
                 canvas.drawColor(Color.argb(255, 0, 0, 0));
                 Bitmap endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy);
                 canvas.drawBitmap(endBitMap, 400, 300, paint);
+                paint.setColor(Color.argb(255, 255, 255, 255));
+                paint.setTextSize(25);
+                canvas.drawText("HOREEE! KAMU MENANG! TETAP PILIH MAKANAN SEHAT YAâ€¦!", 200, 50, paint);
                 ourHolder.unlockCanvasAndPost(canvas);
                 return;
             }
@@ -260,20 +261,20 @@ public class TDView extends SurfaceView implements Runnable {
 
                 // White specs of dust
                 paint.setColor(Color.argb(255, 255, 255, 255));
-                paint.setTextSize(10);
-                        // Draw the player
-                        Bag bag = itemsToBeDisplayed.remove(0);
+                paint.setTextSize(25);
+                // Draw the player
+                Bag bag = itemsToBeDisplayed.remove(0);
 
-                        canvas.drawText("Choose what you think is good food!", 200, 50, paint);
-                        if(Math.random()>0.5) {
-                            bag.getGoodFoodItem().setX(300);bag.getGoodFoodItem().setY(200);
-                            bag.getBadFoodItem().setX(700);bag.getBadFoodItem().setY(200);
-                        } else {
-                            bag.getGoodFoodItem().setX(700);bag.getGoodFoodItem().setY(200);
-                            bag.getBadFoodItem().setX(300);bag.getBadFoodItem().setY(200);
-                        }
-                        canvas.drawBitmap(bag.getGoodFoodItem().getBitmap(), bag.getGoodFoodItem().getX(),
-                                bag.getGoodFoodItem().getY(), paint);
+                canvas.drawText("KAMU PILIH YANG MANA?", 200, 50, paint);
+                if(Math.random()>0.5) {
+                    bag.getGoodFoodItem().setX(300);bag.getGoodFoodItem().setY(200);
+                    bag.getBadFoodItem().setX(700);bag.getBadFoodItem().setY(200);
+                } else {
+                    bag.getGoodFoodItem().setX(700);bag.getGoodFoodItem().setY(200);
+                    bag.getBadFoodItem().setX(300);bag.getBadFoodItem().setY(200);
+                }
+                canvas.drawBitmap(bag.getGoodFoodItem().getBitmap(), bag.getGoodFoodItem().getX(),
+                        bag.getGoodFoodItem().getY(), paint);
                 String foodName = bag.getGoodFoodItem().getTransFoodName();
                 if(foodName.length()>17) {
                     int breaks = foodName.length()/17;
@@ -298,8 +299,8 @@ public class TDView extends SurfaceView implements Runnable {
                     canvas.drawText(foodName, bag.getGoodFoodItem().getX(),
                             bag.getGoodFoodItem().getY() + bag.getGoodFoodItem().getBitmap().getHeight() + 25, paint);
                 }
-                        canvas.drawBitmap(bag.getBadFoodItem().getBitmap(), bag.getBadFoodItem().getX(),
-                                bag.getBadFoodItem().getY(), paint);
+                canvas.drawBitmap(bag.getBadFoodItem().getBitmap(), bag.getBadFoodItem().getX(),
+                        bag.getBadFoodItem().getY(), paint);
                 foodName = bag.getBadFoodItem().getTransFoodName();
                 if(foodName.length()>17) {
                     int breaks = foodName.length()/17;
@@ -324,17 +325,17 @@ public class TDView extends SurfaceView implements Runnable {
                     canvas.drawText(foodName, bag.getBadFoodItem().getX(),
                             bag.getBadFoodItem().getY() + bag.getBadFoodItem().getBitmap().getHeight() + 25, paint);
                 }
-                        itemsDisplayed.add(bag);
+                itemsDisplayed.add(bag);
                 if(replayLevelButton==null){
-                    Bitmap replayBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.replaylevel);
+                    Bitmap replayBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.replaygame);
                     replayLevelButton = new Button(900, 640, Bitmap.createScaledBitmap(replayBitMap,
                             replayBitMap.getWidth(),
                             replayBitMap.getHeight(),
                             false));
                 }
-                if(!view.equals("ItemDetails") && !(levelRunning==1 && itemsDisplayed.size()==1)) {
+                /*if(!view.equals("ItemDetails") && !(levelRunning==1 && itemsDisplayed.size()==1)) {
                     canvas.drawBitmap(replayLevelButton.bitMap, replayLevelButton.x, replayLevelButton.y, paint);
-                }
+                }*/
 
                 if(!backMap.containsKey(view)) {
                     Bitmap backBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.back_button);
@@ -353,29 +354,29 @@ public class TDView extends SurfaceView implements Runnable {
                 }
                 pbr.setProgress(progress);
                 if (!gameEnded) {
-                            // Draw the hud
-                            paint.setTextAlign(Paint.Align.LEFT);
-                            paint.setColor(Color.argb(255, 255, 255, 255));
-                            paint.setTextSize(25);
-                            //canvas.drawText("Fastest:" + fastestTime + "s", 10, 20, paint);
-                        } else {
-                            // Show pause screen
-                            paint.setTextSize(80);
-                            paint.setTextAlign(Paint.Align.CENTER);
-                            canvas.drawText("Game Over", screenX / 2, 100, paint);
-                            paint.setTextSize(25);
-                            //canvas.drawText("Fastest:"+ fastestTime + "s", screenX/2, 160, paint);
-                        }
-                        // Unlock and draw the scene
-                        ourHolder.unlockCanvasAndPost(canvas);
+                    // Draw the hud
+                    paint.setTextAlign(Paint.Align.LEFT);
+                    paint.setColor(Color.argb(255, 255, 255, 255));
+                    paint.setTextSize(25);
+                    //canvas.drawText("Fastest:" + fastestTime + "s", 10, 20, paint);
+                } else {
+                    // Show pause screen
+                    paint.setTextSize(80);
+                    paint.setTextAlign(Paint.Align.CENTER);
+                    canvas.drawText("Game Over", screenX / 2, 100, paint);
+                    paint.setTextSize(25);
+                    //canvas.drawText("Fastest:"+ fastestTime + "s", screenX/2, 160, paint);
                 }
+                // Unlock and draw the scene
+                ourHolder.unlockCanvasAndPost(canvas);
+            }
             else if (view.equals("SelectedItemsView")) {
                 canvas = ourHolder.lockCanvas();
                 canvas.drawColor(Color.argb(255, 0, 0, 0));
                 int starterrX = 10;
                 boolean allGood=true;
 
-                canvas.drawText("These are your selected good foods. Click on each image to read more before you continue!", 200, 50,
+                canvas.drawText("INI ADALAH PILIHANMU. KLIK GAMBAR LAGI UNTUK MENGINGAT PILIHANMU SEHAT ATAU TIDAK.", 50, 50,
                         paint);
                 int Y=100;
                 for (FoodItem obj : selectedItems) {
@@ -525,307 +526,58 @@ public class TDView extends SurfaceView implements Runnable {
     public boolean onTouchEvent(MotionEvent motionEvent) {
         try {
 
-        if(levelRunning>4) {
-            synchronized (lock) {
-                lock.notifyAll();
+            if(levelRunning>4) {
+                synchronized (lock) {
+                    lock.notifyAll();
+                }
+                return true;
             }
-            return true;
-        }
-        // There are many different events in MotionEvent
-        // We care about just 2 - for now.
-        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-            // Has the player lifted there finger up?
-            // Has the player touched the screen?
-            case MotionEvent.ACTION_UP:
-                if(gameEnded && end!=null && end.isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
-                    List<Bag> bags = DataCache.getRandomBagList(1, 10);
-                    for (Bag bag : bags){
-                        GoodFoodItem gfi = bag.getGoodFoodItem();
-                        gfi.getFileName();
-                        Class klass = R.drawable.class;
-                        Field fld = klass.getDeclaredField(gfi.getFileName());
-                        int resource_id = (Integer)fld.get(null);
-                        Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
-                        double htConversion = 1.0;
-                        double widthConversion = 1.0;
-                        if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                        if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
-                        gfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
-                                false));
-                        BadFoodItem bfi = bag.getBadFoodItem();
-                        fld = klass.getDeclaredField(bfi.getFileName());
-                        resource_id = (Integer)fld.get(null);
-                        bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
-                        htConversion = 1.0;
-                        widthConversion = 1.0;
-                        if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                        if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
-                        bfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
-                                false));
-                    }
-                    itemsToBeDisplayed.addAll(bags);
-                    levelRunning=1;
-                    gameEnded = false;
-                    synchronized (lock) {
-                        lock.notifyAll();
-                    }
-                } else if(gameEnded) {
-                    return true;
-                }
-                if(view.equals("Trophy")) {
-                    view="";
-                    List<Bag> bags = DataCache.getRandomBagList(levelRunning, 10);
-                    for (Bag bagg : bags){
-                        GoodFoodItem gfi = bagg.getGoodFoodItem();
-                        gfi.getFileName();
-                        Class klass = R.drawable.class;
-                        Field fld = klass.getDeclaredField(gfi.getFileName());
-                        int resource_id = (Integer)fld.get(null);
-                        Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
-                        double htConversion = 1.0;
-                        double widthConversion = 1.0;
-                        if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                        if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
-                        gfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
-                                false));
-                        BadFoodItem bfi = bagg.getBadFoodItem();
-                        fld = klass.getDeclaredField(bfi.getFileName());
-                        resource_id = (Integer)fld.get(null);
-                        bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
-                        htConversion = 1.0;
-                        widthConversion = 1.0;
-                        if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                        if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
-                        bfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
-                                false));
-                    }
-                    itemsToBeDisplayed.addAll(bags);
-                    itemsDisplayed.clear();
-                    selectedItems.clear();
-                    clickedItems.clear();
-                    view="SelectionView";
-                    synchronized (lock) {
-                        lock.notifyAll();
-                    }
-                    return true;
-                }
-                if(view.equals("SelectionView")) {
-                    int index = itemsDisplayed.size() - 1;
-                    if(index==-1) return true;
-                    System.out.println("Innnnnnnnnn up " + index);
-                    Bag bag = itemsDisplayed.get(index);
-                    if (bag.getGoodFoodItem().isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
-                        selectedItems.add(bag.getGoodFoodItem());
-                        // ----------START------
-                        final PopupWindow popUp = new PopupWindow(context);
-                        LinearLayout layout = new LinearLayout(context);
-
-                        TextView tv = new TextView(context);
-                        tv.setTextSize(25);
-                        tv.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-
-                        mainLayout = new LinearLayout(context);
-
-                        ViewGroup.LayoutParams params= new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT);
-                        layout.setOrientation(LinearLayout.VERTICAL);
-                        tv.setText("GOOD CHOICE");
-                        tv.append("\n");
-                        tv.append("\n");
-                        int lineCount=3;
-                        String foodName = bag.getGoodFoodItem().getTransFoodName();
-                        if(foodName.length()>60) {
-                            int breaks = foodName.length()/60;
-                            int start=0;
-                            int end=60;
-                            for(int ii=0;ii<breaks;ii++) {
-                                String text = foodName.substring(start, end);
-                                int endPoint = Math.max(text.lastIndexOf(" "), text.lastIndexOf(","));
-                                endPoint=Math.max(endPoint,text.lastIndexOf("."));
-                                String displayString = foodName.substring(start,start+endPoint);
-                                tv.append(displayString);
-                                lineCount++;
-                                start+=endPoint;
-                                end=Math.min(start+60,foodName.length());
-                            }
-                            tv.append(foodName.substring(start, end));
-                            lineCount++;
+            // There are many different events in MotionEvent
+            // We care about just 2 - for now.
+            switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+                // Has the player lifted there finger up?
+                // Has the player touched the screen?
+                case MotionEvent.ACTION_UP:
+                    if(gameEnded && end!=null && end.isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
+                        List<Bag> bags = DataCache.getRandomBagList(1, 10);
+                        for (Bag bag : bags){
+                            GoodFoodItem gfi = bag.getGoodFoodItem();
+                            gfi.getFileName();
+                            Class klass = R.drawable.class;
+                            Field fld = klass.getDeclaredField(gfi.getFileName());
+                            int resource_id = (Integer)fld.get(null);
+                            Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
+                            double htConversion = 1.0;
+                            double widthConversion = 1.0;
+                            if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
+                            if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                            gfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
+                                    (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
+                                    (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                    false));
+                            BadFoodItem bfi = bag.getBadFoodItem();
+                            fld = klass.getDeclaredField(bfi.getFileName());
+                            resource_id = (Integer)fld.get(null);
+                            bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
+                            htConversion = 1.0;
+                            widthConversion = 1.0;
+                            if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
+                            if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                            bfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
+                                    (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
+                                    (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                    false));
                         }
-                        else {
-                            tv.append(foodName);
-                            lineCount++;
-                        }
-                        tv.append("\n");
-                        lineCount++;
-                        tv.append("\n");
-                        lineCount++;
-                        String foodDesc = bag.getGoodFoodItem().getFoodDescription();
-                        if(foodDesc.length()>60) {
-                            int breaks = foodDesc.length()/60;
-                            int start=0;
-                            int end=60;
-                            for(int ii=0;ii<breaks;ii++) {
-                                String text = foodDesc.substring(start, end);
-                                int endPoint = Math.max(text.lastIndexOf(" "), text.lastIndexOf(","));
-                                endPoint=Math.max(endPoint,text.lastIndexOf("."));
-                                String displayString = foodDesc.substring(start,start+endPoint);
-                                tv.append(displayString);
-                                lineCount++;
-                                start+=endPoint;
-                                end=Math.min(start+60,foodDesc.length());
-                            }
-                            tv.append("\n");
-                            tv.append(foodDesc.substring(start, end));
-                            lineCount++;
-                        }
-                        else {
-                            tv.append(foodDesc);
-                            lineCount++;
-                        }
-                        for (int i=lineCount;i<13;i++){
-                            tv.append("\n");
-                        }
-                        layout.addView(tv, params);
-                        android.widget.Button okButton = new android.widget.Button(context);
-                        okButton.setX(375);
-                        //okButton.setY(50+(10-lineCount)*30);
-                        okButton.setText("OK");
-                        okButton.setOnClickListener(new OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                popUp.dismiss();
-                                // -----END-------
-                                synchronized (lock) {
-                                    lock.notifyAll();
-                                }
-                            }
-                        });
-                        layout.addView(okButton, 50, 50);
-                        GradientDrawable gd = new GradientDrawable();
-                        gd.setColor(Color.BLACK); // Changes this drawbale to use a single color instead of a gradient
-                        gd.setCornerRadius(5);
-                        gd.setStroke(1, Color.WHITE);
-                        layout.setBackgroundDrawable(gd);
-                        popUp.setContentView(layout);
-                        popUp.showAtLocation(mainLayout, Gravity.CENTER, 10, 10);
-                        popUp.update(50, 50, 800, 400);
-                    }
-                    if (bag.getBadFoodItem().isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
-                        selectedItems.add(bag.getBadFoodItem());
-
-                        final PopupWindow popUp = new PopupWindow(context);
-                        LinearLayout layout = new LinearLayout(context);
-                        TextView tv = new TextView(context);
-                        tv.setTextSize(25);
-                        tv.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-
-                        mainLayout = new LinearLayout(context);
-                        ViewGroup.LayoutParams params= new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT);
-                        layout.setOrientation(LinearLayout.VERTICAL);
-                        tv.setText("BAD CHOICE");
-                        tv.append("\n");
-                        tv.append("\n");
-                        int lineCount=3;
-                        String foodName = bag.getBadFoodItem().getTransFoodName();
-                        if(foodName.length()>60) {
-                            int breaks = foodName.length()/60;
-                            int start=0;
-                            int end=60;
-                            for(int ii=0;ii<breaks;ii++) {
-                                String text = foodName.substring(start, end);
-                                int endPoint = Math.max(text.lastIndexOf(" "), text.lastIndexOf(","));
-                                endPoint=Math.max(endPoint,text.lastIndexOf("."));
-                                String displayString = foodName.substring(start,start+endPoint);
-                                tv.append(displayString);
-                                lineCount++;
-                                start+=endPoint;
-                                end=Math.min(start+60,foodName.length());
-                            }
-                            tv.append(foodName.substring(start, end));
-                            lineCount++;
-                        }
-                        else {
-                            tv.append(foodName);
-                            lineCount++;
-                        }
-                        tv.append("\n");
-                        lineCount++;
-                        tv.append("\n");
-                        lineCount++;
-                        String foodDesc = bag.getBadFoodItem().getFoodDescription();
-                        if(foodDesc.length()>60) {
-                            int breaks = foodDesc.length()/60;
-                            int start=0;
-                            int end=60;
-                            for(int ii=0;ii<breaks;ii++) {
-                                String text = foodDesc.substring(start, end);
-                                int endPoint = Math.max(text.lastIndexOf(" "), text.lastIndexOf(","));
-                                endPoint=Math.max(endPoint,text.lastIndexOf("."));
-                                String displayString = foodDesc.substring(start,start+endPoint);
-                                tv.append(displayString);
-                                lineCount++;
-                                start+=endPoint;
-                                end=Math.min(start+60,foodDesc.length());
-                            }
-                            tv.append("\n");
-                            tv.append(foodDesc.substring(start, end));
-                            lineCount++;
-                        }
-                        else {
-                            tv.append(foodDesc);
-                            lineCount++;
-                        }
-
-                        for (int i=lineCount;i<13;i++){
-                            tv.append("\n");
-                        }
-                        layout.addView(tv, params);
-                        android.widget.Button okButton = new android.widget.Button(context);
-
-                        okButton.setX(375);
-                        //okButton.setY(50+(10-lineCount)*30);
-                        okButton.setText("OK");
-                        okButton.setOnClickListener(new OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                popUp.dismiss();
-                                // -----END-------
-                                synchronized (lock) {
-                                    lock.notifyAll();
-                                }
-                            }
-                        });
-                        layout.addView(okButton, 50, 50);
-                        GradientDrawable gd = new GradientDrawable();
-                        gd.setColor(Color.BLACK); // Changes this drawbale to use a single color instead of a gradient
-                        gd.setCornerRadius(5);
-                        gd.setStroke(1, Color.WHITE);
-                        layout.setBackgroundDrawable(gd);
-                        popUp.setContentView(layout);
-                        popUp.showAtLocation(mainLayout, Gravity.CENTER, 10, 10);
-                        popUp.update(50, 50, 800, 400);
-                    }
-                    if (backMap.get(view).isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
-                        if(index==0) return true;
-                        Bag bagR = itemsDisplayed.remove(index);
-                        itemsToBeDisplayed.add(0,bagR);
-                        bagR = itemsDisplayed.remove(index-1);
-                        itemsToBeDisplayed.add(0, bagR);
-                        selectedItems.remove(selectedItems.size() - 1);
+                        itemsToBeDisplayed.addAll(bags);
+                        levelRunning=1;
+                        gameEnded = false;
                         synchronized (lock) {
                             lock.notifyAll();
                         }
+                    } else if(gameEnded) {
+                        return true;
                     }
-                    if (replayLevelButton.isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
+                    if(view.equals("Trophy")) {
                         view="";
                         List<Bag> bags = DataCache.getRandomBagList(levelRunning, 10);
                         for (Bag bagg : bags){
@@ -860,189 +612,485 @@ public class TDView extends SurfaceView implements Runnable {
                         itemsDisplayed.clear();
                         selectedItems.clear();
                         clickedItems.clear();
-                        synchronized (lock) {
-                            lock.notifyAll();
-                        }
-                    }
-                } else if(view.equals("SelectedItemsView")) {
-                    for (FoodItem item : selectedItems) {
-                        if(item.isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
-                            itemForDetail = item;
-                            if(!clickedItems.contains(item)){
-                                clickedItems.add(item);
-                            }
-                            synchronized (lock) {
-                                lock.notifyAll();
-                            }
-                            if( itemsToBeDisplayed.size()>0) {
-                                view="SelectionView";
-                            } else if (view.equals("SelectedItemsView")) {
-                                view="ItemDetails";
-                            }
-                            return true;
-                        }
-                    }
-                    if(nextButton!=null && nextButton.isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
-                        if(levelRunning>=4) {
-                            synchronized (lock) {
-                                lock.notifyAll();
-                            }
-                            return true;
-                        }
-                        view="";
-                        List<Bag> bags = DataCache.getRandomBagList(++levelRunning, 10);
-                        for (Bag bag : bags){
-                            GoodFoodItem gfi = bag.getGoodFoodItem();
-                            gfi.getFileName();
-                            Class klass = R.drawable.class;
-                            Field fld = klass.getDeclaredField(gfi.getFileName());
-                            int resource_id = (Integer)fld.get(null);
-                            Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
-                            double htConversion = 1.0;
-                            double widthConversion = 1.0;
-                            if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                            if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
-                            gfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                    (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                    (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
-                                    false));
-                            BadFoodItem bfi = bag.getBadFoodItem();
-                            fld = klass.getDeclaredField(bfi.getFileName());
-                            resource_id = (Integer)fld.get(null);
-                            bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
-                            htConversion = 1.0;
-                            widthConversion = 1.0;
-                            if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                            if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
-                            bfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                    (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                    (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
-                                    false));
-                        }
-                        itemsToBeDisplayed.addAll(bags);
-                        itemsDisplayed.clear();
-                        selectedItems.clear();
-                        clickedItems.clear();
-                        synchronized (lock) {
-                            lock.notifyAll();
-                        }
-                    } else if (backMap.get(view)!=null && backMap.get(view).isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
-                        if(selectedItems.size()==0) return true;
-                        Bag bagR = itemsDisplayed.remove(itemsDisplayed.size()-1);
-                        itemsToBeDisplayed.add(0,bagR);
-                        selectedItems.remove(selectedItems.size() - 1);
                         view="SelectionView";
                         synchronized (lock) {
                             lock.notifyAll();
                         }
-                    }else if (replayLevelButton.isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
-                        if(pbr.getProgress()==100){
-                            view="Trophy";
+                        return true;
+                    }
+                    if(view.equals("SelectionView")) {
+                        int index = itemsDisplayed.size() - 1;
+                        if(index==-1) return true;
+                        System.out.println("Innnnnnnnnn up " + index);
+                        Bag bag = itemsDisplayed.get(index);
+                        if (bag.getGoodFoodItem().isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
+                            selectedItems.add(bag.getGoodFoodItem());
+                            // ----------START------
+                            final PopupWindow popUp = new PopupWindow(context);
+                            LinearLayout layout = new LinearLayout(context);
+
+                            TextView tv = new TextView(context);
+                            tv.setTextSize(25);
+                            tv.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+
+                            mainLayout = new LinearLayout(context);
+
+                            RelativeLayout.LayoutParams params1 =
+                                    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                            RelativeLayout.LayoutParams.WRAP_CONTENT);
+                            params1.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+                            params1.setMargins(0,0,0,0);
+                            layout.setOrientation(LinearLayout.VERTICAL);
+                            LinearLayout header = new LinearLayout(context);
+                            header.setOrientation(LinearLayout.HORIZONTAL);
+                            Bitmap thumbsUp = BitmapFactory.decodeResource(context.getResources(), R.drawable.thumbs_up);
+                            double htConversion = 1.0;
+                            double widthConversion = 1.0;
+                            if(thumbsUp.getHeight()>50) htConversion=thumbsUp.getHeight()/50.0;
+                            if(thumbsUp.getWidth()>50) widthConversion=thumbsUp.getWidth()/50.0;
+                            android.widget.ImageView imv = new ImageView(context);
+                            imv.setImageBitmap(Bitmap.createScaledBitmap(thumbsUp,
+                                    (int) (thumbsUp.getWidth() / Math.max(htConversion,widthConversion)),
+                                    (int) (thumbsUp.getHeight() / Math.max(htConversion,widthConversion)),
+                                    false));
+
+                            header.addView(imv, params1);
+                            TextView greenText = new TextView(context);
+                            greenText.setTextColor(Color.GREEN);
+                            greenText.setTextSize(40);
+                            greenText.setText("GOOD CHOICE");
+                            header.addView(greenText, params1);
+                            tv.append("\n");
+                            tv.append("\n");
+                            int lineCount=3;
+                            String foodName = bag.getGoodFoodItem().getTransFoodName();
+                            if(foodName.length()>60) {
+                                int breaks = foodName.length()/60;
+                                int start=0;
+                                int end=60;
+                                for(int ii=0;ii<breaks;ii++) {
+                                    String text = foodName.substring(start, end);
+                                    int endPoint = Math.max(text.lastIndexOf(" "), text.lastIndexOf(","));
+                                    endPoint=Math.max(endPoint,text.lastIndexOf("."));
+                                    String displayString = foodName.substring(start,start+endPoint);
+                                    tv.append(displayString);
+                                    lineCount++;
+                                    start+=endPoint;
+                                    end=Math.min(start+60,foodName.length());
+                                }
+                                tv.append(foodName.substring(start, end));
+                                lineCount++;
+                            }
+                            else {
+                                tv.append(foodName);
+                                lineCount++;
+                            }
+                            tv.append("\n");
+                            lineCount++;
+                            tv.append("\n");
+                            lineCount++;
+                            String foodDesc = bag.getGoodFoodItem().getFoodDescription();
+                            if(foodDesc.length()>60) {
+                                int breaks = foodDesc.length()/60;
+                                int start=0;
+                                int end=60;
+                                for(int ii=0;ii<breaks;ii++) {
+                                    String text = foodDesc.substring(start, end);
+                                    int endPoint = Math.max(text.lastIndexOf(" "), text.lastIndexOf(","));
+                                    endPoint=Math.max(endPoint,text.lastIndexOf("."));
+                                    String displayString = foodDesc.substring(start,start+endPoint);
+                                    tv.append(displayString);
+                                    lineCount++;
+                                    start+=endPoint;
+                                    end=Math.min(start+60,foodDesc.length());
+                                }
+                                tv.append("\n");
+                                tv.append(foodDesc.substring(start, end));
+                                lineCount++;
+                            }
+                            else {
+                                tv.append(foodDesc);
+                                lineCount++;
+                            }
+                            for (int i=lineCount;i<13;i++){
+                                tv.append("\n");
+                            }
+                            header.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
+                            layout.addView(header);
+                            layout.addView(tv, params1);
+                            android.widget.Button okButton = new android.widget.Button(context);
+                            okButton.setX(375);
+                            //okButton.setY(50+(10-lineCount)*30);
+                            okButton.setText("OK");
+                            okButton.setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    popUp.dismiss();
+                                    // -----END-------
+                                    synchronized (lock) {
+                                        lock.notifyAll();
+                                    }
+                                }
+                            });
+                            layout.addView(okButton, 50, 50);
+                            GradientDrawable gd = new GradientDrawable();
+                            gd.setColor(Color.BLACK); // Changes this drawbale to use a single color instead of a gradient
+                            gd.setCornerRadius(5);
+                            gd.setStroke(1, Color.WHITE);
+                            layout.setBackgroundDrawable(gd);
+                            popUp.setContentView(layout);
+                            popUp.showAtLocation(mainLayout, Gravity.CENTER, 10, 10);
+                            popUp.update(50, 50, 800, 450);
+                        }
+                        if (bag.getBadFoodItem().isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
+                            selectedItems.add(bag.getBadFoodItem());
+
+                            final PopupWindow popUp = new PopupWindow(context);
+                            LinearLayout layout = new LinearLayout(context);
+                            TextView tv = new TextView(context);
+                            tv.setTextSize(25);
+                            tv.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+
+                            mainLayout = new LinearLayout(context);
+                            ViewGroup.LayoutParams params= new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                                    ViewGroup.LayoutParams.WRAP_CONTENT);
+                            layout.setOrientation(LinearLayout.VERTICAL);
+                            RelativeLayout.LayoutParams params1 =
+                                    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                            RelativeLayout.LayoutParams.WRAP_CONTENT);
+                            params1.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+                            params1.setMargins(0, 0, 0, 0);
+                            Bitmap thumbsUp = BitmapFactory.decodeResource(context.getResources(), R.drawable.thumbs_down);
+                            double htConversion = 1.0;
+                            double widthConversion = 1.0;
+                            if(thumbsUp.getHeight()>50) htConversion=thumbsUp.getHeight()/50.0;
+                            if(thumbsUp.getWidth()>50) widthConversion=thumbsUp.getWidth()/50.0;
+                            android.widget.ImageView imv = new ImageView(context);
+                            imv.setImageBitmap(Bitmap.createScaledBitmap(thumbsUp,
+                                    (int) (thumbsUp.getWidth() / Math.max(htConversion, widthConversion)),
+                                    (int) (thumbsUp.getHeight() / Math.max(htConversion, widthConversion)),
+                                    false));
+                            LinearLayout header = new LinearLayout(context);
+                            header.setOrientation(LinearLayout.HORIZONTAL);
+                            header.addView(imv, params1);
+                            TextView greenText = new TextView(context);
+                            greenText.setTextColor(Color.RED);
+                            greenText.setTextSize(40);
+                            greenText.setText("BAD CHOICE");
+                            header.addView(greenText, params1);
+                            tv.append("\n");
+                            tv.append("\n");
+                            int lineCount=3;
+                            String foodName = bag.getBadFoodItem().getTransFoodName();
+                            if(foodName.length()>60) {
+                                int breaks = foodName.length()/60;
+                                int start=0;
+                                int end=60;
+                                for(int ii=0;ii<breaks;ii++) {
+                                    String text = foodName.substring(start, end);
+                                    int endPoint = Math.max(text.lastIndexOf(" "), text.lastIndexOf(","));
+                                    endPoint=Math.max(endPoint,text.lastIndexOf("."));
+                                    String displayString = foodName.substring(start,start+endPoint);
+                                    tv.append(displayString);
+                                    lineCount++;
+                                    start+=endPoint;
+                                    end=Math.min(start+60,foodName.length());
+                                }
+                                tv.append(foodName.substring(start, end));
+                                lineCount++;
+                            }
+                            else {
+                                tv.append(foodName);
+                                lineCount++;
+                            }
+                            tv.append("\n");
+                            lineCount++;
+                            tv.append("\n");
+                            lineCount++;
+                            String foodDesc = bag.getBadFoodItem().getFoodDescription();
+                            if(foodDesc.length()>60) {
+                                int breaks = foodDesc.length()/60;
+                                int start=0;
+                                int end=60;
+                                for(int ii=0;ii<breaks;ii++) {
+                                    String text = foodDesc.substring(start, end);
+                                    int endPoint = Math.max(text.lastIndexOf(" "), text.lastIndexOf(","));
+                                    endPoint=Math.max(endPoint,text.lastIndexOf("."));
+                                    String displayString = foodDesc.substring(start,start+endPoint);
+                                    tv.append(displayString);
+                                    lineCount++;
+                                    start+=endPoint;
+                                    end=Math.min(start+60,foodDesc.length());
+                                }
+                                tv.append("\n");
+                                tv.append(foodDesc.substring(start, end));
+                                lineCount++;
+                            }
+                            else {
+                                tv.append(foodDesc);
+                                lineCount++;
+                            }
+
+                            for (int i=lineCount;i<13;i++){
+                                tv.append("\n");
+                            }
+                            header.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
+                            layout.addView(header);
+                            layout.addView(tv, params);
+                            android.widget.Button okButton = new android.widget.Button(context);
+
+                            okButton.setX(375);
+                            //okButton.setY(50+(10-lineCount)*30);
+                            okButton.setText("OK");
+                            okButton.setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    popUp.dismiss();
+                                    // -----END-------
+                                    synchronized (lock) {
+                                        lock.notifyAll();
+                                    }
+                                }
+                            });
+                            layout.addView(okButton, 50, 50);
+                            GradientDrawable gd = new GradientDrawable();
+                            gd.setColor(Color.BLACK); // Changes this drawbale to use a single color instead of a gradient
+                            gd.setCornerRadius(5);
+                            gd.setStroke(1, Color.WHITE);
+                            layout.setBackgroundDrawable(gd);
+                            popUp.setContentView(layout);
+                            popUp.showAtLocation(mainLayout, Gravity.CENTER, 10, 10);
+                            popUp.update(50, 50, 800, 450);
+                        }
+                        if (backMap.get(view).isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
+                            if(index==0) return true;
+                            Bag bagR = itemsDisplayed.remove(index);
+                            itemsToBeDisplayed.add(0,bagR);
+                            bagR = itemsDisplayed.remove(index-1);
+                            itemsToBeDisplayed.add(0, bagR);
+                            selectedItems.remove(selectedItems.size() - 1);
+                            synchronized (lock) {
+                                lock.notifyAll();
+                            }
+                        }
+                        if (replayLevelButton.isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
+                            view="";
+                            List<Bag> bags = DataCache.getRandomBagList(levelRunning, 10);
+                            for (Bag bagg : bags){
+                                GoodFoodItem gfi = bagg.getGoodFoodItem();
+                                gfi.getFileName();
+                                Class klass = R.drawable.class;
+                                Field fld = klass.getDeclaredField(gfi.getFileName());
+                                int resource_id = (Integer)fld.get(null);
+                                Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
+                                double htConversion = 1.0;
+                                double widthConversion = 1.0;
+                                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
+                                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                                gfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
+                                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
+                                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                        false));
+                                BadFoodItem bfi = bagg.getBadFoodItem();
+                                fld = klass.getDeclaredField(bfi.getFileName());
+                                resource_id = (Integer)fld.get(null);
+                                bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
+                                htConversion = 1.0;
+                                widthConversion = 1.0;
+                                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
+                                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                                bfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
+                                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
+                                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                        false));
+                            }
+                            itemsToBeDisplayed.addAll(bags);
+                            itemsDisplayed.clear();
+                            selectedItems.clear();
+                            clickedItems.clear();
+                            synchronized (lock) {
+                                lock.notifyAll();
+                            }
+                        }
+                    } else if(view.equals("SelectedItemsView")) {
+                        for (FoodItem item : selectedItems) {
+                            if(item.isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
+                                itemForDetail = item;
+                                if(!clickedItems.contains(item)){
+                                    clickedItems.add(item);
+                                }
+                                synchronized (lock) {
+                                    lock.notifyAll();
+                                }
+                                if( itemsToBeDisplayed.size()>0) {
+                                    view="SelectionView";
+                                } else if (view.equals("SelectedItemsView")) {
+                                    view="ItemDetails";
+                                }
+                                return true;
+                            }
+                        }
+                        if(nextButton!=null && nextButton.isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
+                            if(levelRunning>=4) {
+                                synchronized (lock) {
+                                    lock.notifyAll();
+                                }
+                                return true;
+                            }
+                            view="";
+                            List<Bag> bags = DataCache.getRandomBagList(++levelRunning, 10);
+                            for (Bag bag : bags){
+                                GoodFoodItem gfi = bag.getGoodFoodItem();
+                                gfi.getFileName();
+                                Class klass = R.drawable.class;
+                                Field fld = klass.getDeclaredField(gfi.getFileName());
+                                int resource_id = (Integer)fld.get(null);
+                                Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
+                                double htConversion = 1.0;
+                                double widthConversion = 1.0;
+                                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
+                                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                                gfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
+                                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
+                                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                        false));
+                                BadFoodItem bfi = bag.getBadFoodItem();
+                                fld = klass.getDeclaredField(bfi.getFileName());
+                                resource_id = (Integer)fld.get(null);
+                                bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
+                                htConversion = 1.0;
+                                widthConversion = 1.0;
+                                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
+                                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                                bfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
+                                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
+                                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                        false));
+                            }
+                            itemsToBeDisplayed.addAll(bags);
+                            itemsDisplayed.clear();
+                            selectedItems.clear();
+                            clickedItems.clear();
+                            synchronized (lock) {
+                                lock.notifyAll();
+                            }
+                        } else if (backMap.get(view)!=null && backMap.get(view).isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
+                            if(selectedItems.size()==0) return true;
+                            Bag bagR = itemsDisplayed.remove(itemsDisplayed.size()-1);
+                            itemsToBeDisplayed.add(0,bagR);
+                            selectedItems.remove(selectedItems.size() - 1);
+                            view="SelectionView";
+                            synchronized (lock) {
+                                lock.notifyAll();
+                            }
+                        }else if (replayLevelButton.isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
+                            if(pbr.getProgress()==100){
+                                view="Trophy";
+                                synchronized (lock) {
+                                    lock.notifyAll();
+                                }
+                                return true;
+                            }
+                            view="";
+                            List<Bag> bags = DataCache.getRandomBagList(levelRunning, 10);
+                            for (Bag bagg : bags){
+                                GoodFoodItem gfi = bagg.getGoodFoodItem();
+                                gfi.getFileName();
+                                Class klass = R.drawable.class;
+                                Field fld = klass.getDeclaredField(gfi.getFileName());
+                                int resource_id = (Integer)fld.get(null);
+                                Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
+                                double htConversion = 1.0;
+                                double widthConversion = 1.0;
+                                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
+                                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                                gfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
+                                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
+                                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                        false));
+                                BadFoodItem bfi = bagg.getBadFoodItem();
+                                fld = klass.getDeclaredField(bfi.getFileName());
+                                resource_id = (Integer)fld.get(null);
+                                bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
+                                htConversion = 1.0;
+                                widthConversion = 1.0;
+                                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
+                                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                                bfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
+                                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
+                                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                        false));
+                            }
+                            itemsToBeDisplayed.addAll(bags);
+                            itemsDisplayed.clear();
+                            selectedItems.clear();
+                            clickedItems.clear();
+                            synchronized (lock) {
+                                lock.notifyAll();
+                            }
+                        } else {
                             synchronized (lock) {
                                 lock.notifyAll();
                             }
                             return true;
                         }
-                        view="";
-                        List<Bag> bags = DataCache.getRandomBagList(levelRunning, 10);
-                        for (Bag bagg : bags){
-                            GoodFoodItem gfi = bagg.getGoodFoodItem();
-                            gfi.getFileName();
-                            Class klass = R.drawable.class;
-                            Field fld = klass.getDeclaredField(gfi.getFileName());
-                            int resource_id = (Integer)fld.get(null);
-                            Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
-                            double htConversion = 1.0;
-                            double widthConversion = 1.0;
-                            if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                            if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
-                            gfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                    (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                    (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
-                                    false));
-                            BadFoodItem bfi = bagg.getBadFoodItem();
-                            fld = klass.getDeclaredField(bfi.getFileName());
-                            resource_id = (Integer)fld.get(null);
-                            bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
-                            htConversion = 1.0;
-                            widthConversion = 1.0;
-                            if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                            if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
-                            bfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                    (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                    (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
-                                    false));
-                        }
-                        itemsToBeDisplayed.addAll(bags);
-                        itemsDisplayed.clear();
-                        selectedItems.clear();
-                        clickedItems.clear();
-                        synchronized (lock) {
-                            lock.notifyAll();
-                        }
-                    } else {
-                        synchronized (lock) {
-                            lock.notifyAll();
-                        }
-                        return true;
-                    }
-                } else if(view.equals("ItemDetails")) {
-                    if (backMap.get(view)!=null && backMap.get(view).isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
-                        view="";
-                        synchronized (lock) {
-                            lock.notifyAll();
-                        }
-                        return true;
-                    } else if(nextButton!=null && nextButton.isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
-                        view="";
-                        List<Bag> bags = DataCache.getRandomBagList(levelRunning, 10);
-                        for (Bag bag : bags){
-                            GoodFoodItem gfi = bag.getGoodFoodItem();
-                            gfi.getFileName();
-                            Class klass = R.drawable.class;
-                            Field fld = klass.getDeclaredField(gfi.getFileName());
-                            int resource_id = (Integer)fld.get(null);
-                            Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
-                            double htConversion = 1.0;
-                            double widthConversion = 1.0;
-                            if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                            if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
-                            gfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                    (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                    (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
-                                    false));
-                            BadFoodItem bfi = bag.getBadFoodItem();
-                            fld = klass.getDeclaredField(bfi.getFileName());
-                            resource_id = (Integer)fld.get(null);
-                            bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
-                            htConversion = 1.0;
-                            widthConversion = 1.0;
-                            if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                            if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
-                            bfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                    (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                    (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
-                                    false));
-                        }
-                        itemsToBeDisplayed.addAll(bags);
-                        itemsDisplayed.clear();
-                        selectedItems.clear();
-                        synchronized (lock) {
-                            lock.notifyAll();
+                    } else if(view.equals("ItemDetails")) {
+                        if (backMap.get(view)!=null && backMap.get(view).isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
+                            view="";
+                            synchronized (lock) {
+                                lock.notifyAll();
+                            }
+                            return true;
+                        } else if(nextButton!=null && nextButton.isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
+                            view="";
+                            List<Bag> bags = DataCache.getRandomBagList(levelRunning, 10);
+                            for (Bag bag : bags){
+                                GoodFoodItem gfi = bag.getGoodFoodItem();
+                                gfi.getFileName();
+                                Class klass = R.drawable.class;
+                                Field fld = klass.getDeclaredField(gfi.getFileName());
+                                int resource_id = (Integer)fld.get(null);
+                                Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
+                                double htConversion = 1.0;
+                                double widthConversion = 1.0;
+                                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
+                                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                                gfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
+                                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
+                                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                        false));
+                                BadFoodItem bfi = bag.getBadFoodItem();
+                                fld = klass.getDeclaredField(bfi.getFileName());
+                                resource_id = (Integer)fld.get(null);
+                                bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
+                                htConversion = 1.0;
+                                widthConversion = 1.0;
+                                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
+                                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                                bfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
+                                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
+                                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                        false));
+                            }
+                            itemsToBeDisplayed.addAll(bags);
+                            itemsDisplayed.clear();
+                            selectedItems.clear();
+                            synchronized (lock) {
+                                lock.notifyAll();
+                            }
                         }
                     }
-                }
-                if( itemsToBeDisplayed.size()>0) {
-                    view="SelectionView";
-                } else if (view.equals("SelectedItemsView")) {
-                    view="ItemDetails";
-                }
-                // If we are currently on the pause screen, start a new game
-                if(gameEnded){
-                    startGame();
-                }
-                break;
-        }
+                    if( itemsToBeDisplayed.size()>0) {
+                        view="SelectionView";
+                    } else if (view.equals("SelectedItemsView")) {
+                        view="ItemDetails";
+                    }
+                    // If we are currently on the pause screen, start a new game
+                    if(gameEnded){
+                        startGame();
+                    }
+                    break;
+            }
 
 
         } catch (Exception ex) {
