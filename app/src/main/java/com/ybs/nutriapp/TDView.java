@@ -630,7 +630,7 @@ public class TDView extends SurfaceView implements Runnable {
                             LinearLayout layout = new LinearLayout(context);
 
                             TextView tv = new TextView(context);
-                            tv.setTextSize(25);
+                            tv.setTextSize(20);
                             tv.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
 
                             mainLayout = new LinearLayout(context);
@@ -748,7 +748,7 @@ public class TDView extends SurfaceView implements Runnable {
                             final PopupWindow popUp = new PopupWindow(context);
                             LinearLayout layout = new LinearLayout(context);
                             TextView tv = new TextView(context);
-                            tv.setTextSize(25);
+                            tv.setTextSize(20);
                             tv.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
 
                             mainLayout = new LinearLayout(context);
