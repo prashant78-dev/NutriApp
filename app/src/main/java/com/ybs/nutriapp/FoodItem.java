@@ -73,10 +73,12 @@ public abstract class FoodItem {
                 bitmap.getHeight() / 3,
                 false);
         }else if(maxX < 1200){
-            bitmap = Bitmap.createScaledBitmap(bitmap,
-                bitmap.getWidth() / 2,
-                bitmap.getHeight() / 2,
-                false);
+            if(bitmap!=null) {
+                bitmap = Bitmap.createScaledBitmap(bitmap,
+                        bitmap.getWidth() / 2,
+                        bitmap.getHeight() / 2,
+                        false);
+            }
         }
     }
 
