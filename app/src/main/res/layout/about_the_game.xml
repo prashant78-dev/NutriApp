@@ -1,0 +1,50 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/aboutthegamescrollview"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbarStyle="insideInset"
+    android:scrollIndicators="right"
+    android:scrollbars="vertical"
+    android:fillViewport="true"
+    android:scrollbarSize="50dip" >
+
+    <LinearLayout android:orientation="vertical"
+        android:scrollbars="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarStyle="insideInset"
+        android:scrollIndicators="right"
+        android:fadeScrollbars="false"
+        android:scrollbarFadeDuration="0"
+        android:isScrollContainer="true"
+        android:id="@+id/aboutthegamelayout">
+
+        <TextView
+            android:id="@+id/aboutthegame"
+            android:layout_width="fill_parent"
+            android:layout_height="300dp"
+            android:autoLink="web"
+            android:scrollbars="vertical"
+            android:fadeScrollbars="false"
+            android:scrollbarFadeDuration="0"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:text="About" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:id="@+id/buttonOK"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="25dp"
+            android:layout_gravity="center_vertical|center_horizontal" />
+
+
+    </LinearLayout>
+</ScrollView>
+
