@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.Authenticator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,10 +49,19 @@ public class DataCache {
     public static ArrayList<Bag> getRandomBagList(int requestGoodFoodItemLevel, int requestNumber)
     {
         ArrayList<Bag> bagList = new ArrayList<Bag>();
+        String foodCategory = "";
+        randomGenerator = new Random();
+        int randomNumber = randomGenerator.nextInt(5);
+        if (randomNumber >= 2)
+        {
+            foodCategory = "food";
+        } else {
+            foodCategory = "drink";
+        }
         try
         {
-            ArrayList<GoodFoodItem> randomGoodFoodItems = getRandomGoodFoodItem(requestGoodFoodItemLevel, requestNumber);
-            ArrayList<BadFoodItem> randomBadFoodItems = getRandomBadFoodItem(requestNumber);
+            ArrayList<GoodFoodItem> randomGoodFoodItems = getRandomGoodFoodItem(requestGoodFoodItemLevel, requestNumber, foodCategory);
+            ArrayList<BadFoodItem> randomBadFoodItems = getRandomBadFoodItem(requestNumber, foodCategory);
             if ((randomGoodFoodItems.size()!=requestNumber) || (randomBadFoodItems.size() != requestNumber)){
                 return null;
             }
@@ -75,34 +85,41 @@ public class DataCache {
 
     // Get Random Number of Good Food Object by Level
     // param: request level (e.g: level 3), request number (e.g: 5 good food)
-    public static ArrayList<GoodFoodItem> getRandomGoodFoodItem(int requestLevel, int requestNumber)
+    public static ArrayList<GoodFoodItem> getRandomGoodFoodItem(int requestLevel, int requestNumber, String foodCategory)
     {
         ArrayList<GoodFoodItem> goodFoodList = new ArrayList<GoodFoodItem>();
         try
         {
             randomGenerator = new Random();
             ArrayList<String> goodFoodListByLevel = getAllGoodFoodItem(requestLevel);
+          
             if (requestNumber > goodFoodListByLevel.size())
             {
                 return null;
             }
             else
             {
-                for (int i = 0; i < requestNumber; i++) {
+                int i = 0;
+                while (i < requestNumber)
+                {
 
                     int indexItem = randomGenerator.nextInt(goodFoodListByLevel.size());
                     String[] stringItem = goodFoodListByLevel.get(indexItem).split("\\|");
-                    for (int j = 0; j < stringItem.length; j ++)
-                    {
-                        if (stringItem[j] == null)
-                        {
+                    for (int j = 0; j < stringItem.length; j++) {
+                        if (stringItem[j] == null) {
                             stringItem[j] = "";
                         }
 
                     }
-                    GoodFoodItem goodFoodItem = new GoodFoodItem(Integer.parseInt(stringItem[0]),stringItem[1],stringItem[2],stringItem[3],stringItem[4],stringItem[5]);
-                    goodFoodList.add(goodFoodItem);
-                    goodFoodListByLevel.remove(indexItem);
+                    if (stringItem[5].equals(foodCategory)) {
+                        String display = goodFoodListByLevel.get(indexItem);
+                        System.out.println(display);
+                        GoodFoodItem goodFoodItem = new GoodFoodItem(Integer.parseInt(stringItem[0]), stringItem[1], stringItem[2], stringItem[3], stringItem[4], stringItem[5]);
+                        goodFoodList.add(goodFoodItem);
+                        goodFoodListByLevel.remove(indexItem);
+                        i = i + 1;
+                    }
+
                 }
 
 
@@ -120,7 +137,7 @@ public class DataCache {
 
     // Get Random Number of Bad Food Object
     // param: request number (e.g: 5 bad food)
-    public static ArrayList<BadFoodItem> getRandomBadFoodItem(int requestNumber)
+    public static ArrayList<BadFoodItem> getRandomBadFoodItem(int requestNumber, String foodCategory)
     {
         ArrayList<BadFoodItem> badFoodList = new ArrayList<BadFoodItem>();
         try
@@ -133,7 +150,8 @@ public class DataCache {
             }
             else
             {
-                for (int i = 0; i < requestNumber; i++) {
+                int i = 0;
+                while (i < requestNumber) {
 
                     int indexItem = randomGenerator.nextInt(badFoodStringList.size());
                     String[] stringItem = badFoodStringList.get(indexItem).split("\\|");
@@ -146,9 +164,12 @@ public class DataCache {
                         }
 
                     }
-                    BadFoodItem badFoodItem = new BadFoodItem(stringItem[0],stringItem[1],stringItem[2],stringItem[3],stringItem[4]);
-                    badFoodList.add(badFoodItem);
-                    badFoodStringList.remove(indexItem);
+                    if (stringItem[4].equals(foodCategory)) {
+                        BadFoodItem badFoodItem = new BadFoodItem(stringItem[0], stringItem[1], stringItem[2], stringItem[3], stringItem[4]);
+                        badFoodList.add(badFoodItem);
+                        badFoodStringList.remove(indexItem);
+                        i = i + 1;
+                    }
                 }
 
 
