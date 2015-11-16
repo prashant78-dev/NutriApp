@@ -216,7 +216,9 @@ public class TDView extends SurfaceView implements Runnable {
         if (ourHolder.getSurface().isValid()) {
             if(view.equals("Trophy")) {
                 canvas = ourHolder.lockCanvas();
+
                 canvas.drawColor(Color.argb(255, 0, 0, 0));
+                canvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.plainbackground), 0, 0, paint);
                 Bitmap endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy);
                 canvas.drawBitmap(endBitMap, 400, 300, paint);
                 paint.setColor(Color.argb(255, 255, 255, 255));
@@ -227,6 +229,8 @@ public class TDView extends SurfaceView implements Runnable {
             }
             if(view.equals("SelectedItemsView") && levelRunning>=4) {
                 canvas = ourHolder.lockCanvas();
+                canvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.plainbackground),0,0,paint);
+
                 canvas.drawColor(Color.argb(255, 0, 0, 0));
                 Bitmap endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy);
                 end = new Button(550, 300, endBitMap);
@@ -252,6 +256,7 @@ public class TDView extends SurfaceView implements Runnable {
                 // For debugging
                 // Switch to white pixels
                 paint.setColor(Color.argb(255, 255, 255, 255));
+                canvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.plainbackground), 0, 0, paint);
                 // Draw Hit boxes
                 //canvas.drawRect(player.getHitbox().left, player.getHitbox().top, player.getHitbox().right, player.getHitbox().bottom, paint);
                 //canvas.drawRect(enemy1.getHitbox().left, enemy1.getHitbox().top, enemy1.getHitbox().right, enemy1.getHitbox().bottom, paint);
@@ -339,7 +344,7 @@ public class TDView extends SurfaceView implements Runnable {
 
                 if(!backMap.containsKey(view)) {
                     Bitmap backBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.back_button);
-                    Button backButton = new Button(800, 640, Bitmap.createScaledBitmap(backBitMap,
+                    Button backButton = new Button(800, 440, Bitmap.createScaledBitmap(backBitMap,
                             replayLevelButton.bitMap.getHeight(),
                             replayLevelButton.bitMap.getHeight(),
                             false));
@@ -373,6 +378,7 @@ public class TDView extends SurfaceView implements Runnable {
             else if (view.equals("SelectedItemsView")) {
                 canvas = ourHolder.lockCanvas();
                 canvas.drawColor(Color.argb(255, 0, 0, 0));
+                canvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.plainbackground), 0, 0, paint);
                 int starterrX = 10;
                 boolean allGood=true;
 
@@ -413,7 +419,7 @@ public class TDView extends SurfaceView implements Runnable {
                         canvas.drawText(foodName, starterrX,
                                 Y + obj.getBitmap().getHeight() + 25, paint);
                     }
-                    starterrX+=250;
+                    starterrX+=200;
                 }
 
                 /*if(!backMap.containsKey(view)) {
@@ -447,6 +453,7 @@ public class TDView extends SurfaceView implements Runnable {
                 if(itemForDetail==null || itemForDetail.getBitmap()==null) return;
                 canvas = ourHolder.lockCanvas();
                 canvas.drawColor(Color.argb(255, 0, 0, 0));
+                canvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.plainbackground), 0, 0, paint);
                 canvas.drawBitmap(itemForDetail.getBitmap(), 200, 400, paint);
                 String foodName = itemForDetail.getTransFoodName();
                 if(foodName.length()>17) {
