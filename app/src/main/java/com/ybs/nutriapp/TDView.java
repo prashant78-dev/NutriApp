@@ -33,9 +33,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class TDView extends SurfaceView implements Runnable {
-
+    private static Random randomGenerator;
     //For the FX
     private SoundPool soundPool;
     int start = -1;
@@ -216,10 +217,39 @@ public class TDView extends SurfaceView implements Runnable {
         if (ourHolder.getSurface().isValid()) {
             if(view.equals("Trophy")) {
                 canvas = ourHolder.lockCanvas();
-
                 canvas.drawColor(Color.argb(255, 0, 0, 0));
                 canvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.plainbackground), 0, 0, paint);
                 Bitmap endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy);
+                randomGenerator = new Random();
+                int randomNumber = randomGenerator.nextInt(11);
+
+                switch (randomNumber)
+                {
+                    case 1:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy1);
+                        break;
+                    case 2:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy2);
+                        break;
+                    case 3:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy3);
+                        break;
+                    case 4:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy4);
+                        break;
+                    case 5:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy5);
+                        break;
+                    case 6:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy6);
+                        break;
+                    case 7:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy7);
+                        break;
+                    case 8:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy8);
+                        break;
+                    case 9:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy9);
+                        break;
+                    case 10:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy10);
+                        break;
+                    default:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy);
+                        break;
+
+                }
+
                 canvas.drawBitmap(endBitMap, 400, 300, paint);
                 paint.setColor(Color.argb(255, 255, 255, 255));
                 paint.setTextSize(25);
@@ -229,10 +259,38 @@ public class TDView extends SurfaceView implements Runnable {
             }
             if(view.equals("SelectedItemsView") && levelRunning>=4) {
                 canvas = ourHolder.lockCanvas();
-                canvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.plainbackground),0,0,paint);
-
+                canvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.plainbackground), 0, 0, paint);
                 canvas.drawColor(Color.argb(255, 0, 0, 0));
                 Bitmap endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy);
+                randomGenerator = new Random();
+                int randomNumber = randomGenerator.nextInt(11);
+
+                switch (randomNumber)
+                {
+                    case 1:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy1);
+                        break;
+                    case 2:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy2);
+                        break;
+                    case 3:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy3);
+                        break;
+                    case 4:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy4);
+                        break;
+                    case 5:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy5);
+                        break;
+                    case 6:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy6);
+                        break;
+                    case 7:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy7);
+                        break;
+                    case 8:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy8);
+                        break;
+                    case 9:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy9);
+                        break;
+                    case 10:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy10);
+                        break;
+                    default:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy);
+                        break;
+
+                }
                 end = new Button(550, 300, endBitMap);
                 canvas.drawBitmap(endBitMap, end.x, end.y, paint);
                 ourHolder.unlockCanvasAndPost(canvas);
@@ -245,7 +303,20 @@ public class TDView extends SurfaceView implements Runnable {
             if( itemsToBeDisplayed.size()>0) {
                 view="SelectionView";
             } else if(view.equals("SelectionView") || view.equals("")){
-                view="SelectedItemsView";
+                int progress=0;
+                for (FoodItem fItem : selectedItems) {
+                    if(fItem.isGoodItem()) progress+=10;
+                }
+                pbr.setProgress(progress);
+                if(view.equals("SelectionView") && pbr.getProgress()==100){
+                    view="Trophy";
+                    synchronized (lock) {
+                        lock.notifyAll();
+                    }
+                    return;
+                } else {
+                    view = "SelectedItemsView";
+                }
             }
             if(view.equals("SelectionView")) {
                 canvas = ourHolder.lockCanvas();
@@ -374,8 +445,17 @@ public class TDView extends SurfaceView implements Runnable {
                 }
                 // Unlock and draw the scene
                 ourHolder.unlockCanvasAndPost(canvas);
+
+                if(pbr.getProgress()==100){
+                    view="Trophy";
+                    synchronized (lock) {
+                        lock.notifyAll();
+                    }
+                    return;
+                }
             }
-            else if (view.equals("SelectedItemsView")) {
+            else if (view.equals("SelectedItemsView") || view.equals("SelectedItemsViewNew")) {
+                view="SelectedItemsView";
                 canvas = ourHolder.lockCanvas();
                 canvas.drawColor(Color.argb(255, 0, 0, 0));
                 canvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.plainbackground), 0, 0, paint);
@@ -449,6 +529,14 @@ public class TDView extends SurfaceView implements Runnable {
                     }
                 }*/
                 ourHolder.unlockCanvasAndPost(canvas);
+                if(view.equals("SelectedItemsView")) return;
+                if(pbr.getProgress()==100){
+                    view="Trophy";
+                    synchronized (lock) {
+                        lock.notifyAll();
+                    }
+                    return;
+                }
             } else if(view.equals("ItemDetails")) {
                 if(itemForDetail==null || itemForDetail.getBitmap()==null) return;
                 canvas = ourHolder.lockCanvas();
@@ -585,7 +673,12 @@ public class TDView extends SurfaceView implements Runnable {
                         return true;
                     }
                     if(view.equals("Trophy")) {
-                        view="";
+                        view="SelectedItemsViewNew";
+                        synchronized (lock) {
+                            lock.notifyAll();
+                        }
+                        return true;
+                        /*view="";
                         List<Bag> bags = DataCache.getRandomBagList(levelRunning, 10);
                         for (Bag bagg : bags){
                             GoodFoodItem gfi = bagg.getGoodFoodItem();
@@ -623,9 +716,16 @@ public class TDView extends SurfaceView implements Runnable {
                         synchronized (lock) {
                             lock.notifyAll();
                         }
-                        return true;
+                        return true;*/
                     }
                     if(view.equals("SelectionView")) {
+                        if(pbr.getProgress()==100){
+                            view="Trophy";
+                            synchronized (lock) {
+                                lock.notifyAll();
+                            }
+                            return true;
+                        }
                         int index = itemsDisplayed.size() - 1;
                         if(index==-1) return true;
                         System.out.println("Innnnnnnnnn up " + index);
@@ -665,7 +765,7 @@ public class TDView extends SurfaceView implements Runnable {
                             TextView greenText = new TextView(context);
                             greenText.setTextColor(Color.GREEN);
                             greenText.setTextSize(40);
-                            greenText.setText("GOOD CHOICE");
+                            greenText.setText("SEHAT");
                             header.addView(greenText, params1);
                             tv.append("\n");
                             tv.append("\n");
@@ -745,6 +845,7 @@ public class TDView extends SurfaceView implements Runnable {
                             gd.setCornerRadius(5);
                             gd.setStroke(1, Color.WHITE);
                             layout.setBackgroundDrawable(gd);
+                            layout.setBackgroundResource(R.drawable.plainbackground);
                             popUp.setContentView(layout);
                             popUp.showAtLocation(mainLayout, Gravity.CENTER, 10, 10);
                             popUp.update(50, 50, 800, 450);
@@ -783,7 +884,7 @@ public class TDView extends SurfaceView implements Runnable {
                             TextView greenText = new TextView(context);
                             greenText.setTextColor(Color.RED);
                             greenText.setTextSize(40);
-                            greenText.setText("BAD CHOICE");
+                            greenText.setText("KURANG SEHAT");
                             header.addView(greenText, params1);
                             tv.append("\n");
                             tv.append("\n");
@@ -865,6 +966,7 @@ public class TDView extends SurfaceView implements Runnable {
                             gd.setCornerRadius(5);
                             gd.setStroke(1, Color.WHITE);
                             layout.setBackgroundDrawable(gd);
+                            layout.setBackgroundResource(R.drawable.plainbackground);
                             popUp.setContentView(layout);
                             popUp.showAtLocation(mainLayout, Gravity.CENTER, 10, 10);
                             popUp.update(50, 50, 800, 450);
@@ -991,13 +1093,7 @@ public class TDView extends SurfaceView implements Runnable {
                                 lock.notifyAll();
                             }
                         }else if (replayLevelButton.isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
-                            if(pbr.getProgress()==100){
-                                view="Trophy";
-                                synchronized (lock) {
-                                    lock.notifyAll();
-                                }
-                                return true;
-                            }
+
                             view="";
                             List<Bag> bags = DataCache.getRandomBagList(levelRunning, 10);
                             for (Bag bagg : bags){

@@ -2,8 +2,8 @@ package com.ybs.nutriapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -71,11 +71,10 @@ class AboutTheGameView extends SurfaceView implements Runnable {
     @Override
     public void run() {
         canvas = ourHolder.lockCanvas();
-        canvas.drawColor(Color.argb(255, 0, 0, 0));
+        //canvas.drawColor(Color.argb(255, 0, 0, 0));
 
         // For debugging
         // Switch to white pixels
-        paint.setColor(Color.argb(255, 255, 255, 255));
         paint.setTextSize(25);
         if(MainActivity.language.equals("English")) {
             canvas.drawText("For Children ", 100, 50, paint);

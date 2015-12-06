@@ -53,13 +53,16 @@ public class MainActivity extends Activity
         layout.setVerticalScrollBarEnabled(true);
         layout.setVerticalFadingEdgeEnabled(false);
         tv = (TextView)view.findViewById(R.id.aboutthegame);
-
+        //canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.plainbackground), 0, 0, paint);
+        //popUp.setBackgroundDrawable(getDrawable(R.drawable.plainbackground));
+        layout.setBackgroundResource(R.drawable.plainbackground);
+        //tv.setBackground(this.getDrawable(R.drawable.plainbackground));
         tv.setTextSize(25);
         tv.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
 
         tv.setMovementMethod(ScrollingMovementMethod.getInstance());
-        tv.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
-        tv.setVerticalScrollBarEnabled(true);
+        //tv.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
+        //tv.setVerticalScrollBarEnabled(true);
         mainLayout = new LinearLayout(this);
 
         final boolean click = true;
@@ -92,7 +95,8 @@ public class MainActivity extends Activity
             tv.append("Food Battle could also be learned by parents to help their children and family members to choose");
             tv.append(" and consume healthy food. ");
         } else {
-            tv.setText("Untuk Anak-anak ");
+            tv.setText("Purpose of game:\n");
+            tv.append("Untuk Anak-anak ");
             tv.append("\n");
             tv.append("Food Battle memperkenalkan anak dengan jenis makanan yang sehat dan tidak sehat. Permainan ini dikembangkan ");
             tv.append("oleh Yayasan Balita Sehat sebagai media untuk membekali anak agar dapat memilih makanan dan jajanan sehat.");
@@ -103,21 +107,39 @@ public class MainActivity extends Activity
             tv.append("Food Battle juga dapat dipelajari oleh orang tua untuk membantu anak dan anggota keluarga dalam ");
             tv.append("memilih dan mengkonsumsi makanan sehat. ");
             tv.append("\n");
-            tv.append("Cara Bermain");
+            tv.append("\n");
+            tv.append("For Children ");
+            tv.append("\n");
+            tv.append("Food Battle shows children healthy and unhealthy food. This game is developed by Yayasan Balita Sehat ");
+            tv.append("as a means to educate children to be able to choose healthy snacks and meals.");
+            tv.append("\n");
+            tv.append("\n");
+            tv.append("For Parents ");
+            tv.append("\n");
+            tv.append("Food Battle could also be learned by parents to help their children and family members to choose");
+            tv.append(" and consume healthy food. ");
+            tv.append("\n");
+            tv.append("\n");
+            tv.append("Cara Bermain:\n");
             tv.append("1. Ketika pemain mulai Food Battle, 2 gambar makanan acak akan ditampilkan, makanan yang sehat dan tidak sehat.\n");
-            tv.append("Pilih makanan yang sehat untuk memenangkan Food Battle!\n");
-            tv.append("Setiap kamu memilih makanan yang sehat, power akan meningkat!\n");
-            tv.append("Kalau kamu memilih makanan yang tidak sehat, power akan tetap seperti itu!\n");
-            tv.append("Setelah kamu selesai membaca pesan tentang makanan, sentuh layar lagi untuk memainkan set berikutnya.\n");
-            tv.append("Ada 10 pasang makanan acak. Untuk memenangkan trofi permainan, kamu perlu memilih semua 10 makanan yang baik!\n");
-            tv.append("Tapi, jangan khawatir jika kamu sudah memilih beberapa makanan yang buruk, setidaknya kamu bisa belajar lebih banyak tentang yang makanan yang sebaiknya dihindari.\n");
-            tv.append("Pada akhir 10 putaran, seorang dewasa sebaiknya menemani anak mereview kembali kandungan gizi dari 10 makanan yang dipilih di halaman ringkasan\n");
-            tv.append("Orang dewasa dapat membaca rincian dengan menyentuh setiap makanan yang dipilih, yang akan menampilkan catatan singkat.\n");
-            tv.append("Ketika semua catatan telah dibuka, tombol Replay akan muncul.\n");
-            tv.append("Replay Food Battle dan berusaha lebih keras babak berikutnya!\n");
-            tv.append("Petunjuk # 1: makanan dan minuman baru dapat tampil di babak berikutnya!\n");
-            tv.append("Petunjuk # 2: Ada piala yang berbeda untuk dimenangkan juga, ayo semangat memilih makanan sehat!\n");
+            tv.append("2. Pilih makanan yang sehat untuk memenangkan Food Battle!\n");
+            tv.append("3. Setiap kamu memilih makanan yang sehat, power akan meningkat!\n");
+            tv.append("4. Kalau kamu memilih makanan yang tidak sehat, power akan tetap seperti itu!\n");
+            tv.append("5. Setelah kamu selesai membaca pesan tentang makanan, sentuh layar lagi untuk memainkan set berikutnya.\n");
+            tv.append("6. Ada 10 pasang makanan acak. Untuk memenangkan trofi permainan, kamu perlu memilih semua 10 makanan yang baik!\n");
+            tv.append("7. Tapi, jangan khawatir jika kamu sudah memilih beberapa makanan yang buruk, setidaknya kamu bisa belajar lebih banyak tentang yang makanan yang sebaiknya dihindari.\n");
+            tv.append("8. Kalau mau, kamu bisa menekan tombol panah ke belakang untuk kembali ke set makanan sebelumnya untuk dimainkan lagi\n");
+            tv.append("9. Pada akhir 10 putaran, seorang dewasa sebaiknya menemani anak mereview kembali kandungan gizi dari 10 makanan yang dipilih di halaman ringkasan\n");
+            tv.append("10. Orang dewasa dapat membaca rincian dengan menyentuh setiap makanan yang dipilih, yang akan menampilkan catatan singkat.\n");
+            tv.append("11. Tombol Replay akan muncul pada halaman ringkasan untuk pemain mencoba lagi game yang telah dimainkan\n");
+            tv.append("12. Tekan tombol Replay dan berusaha lebih keras babak berikutnya!\n");
+            tv.append("13. Petunjuk # 1: makanan dan minuman baru dapat tampil di babak berikutnya!\n");
+            tv.append("14. Petunjuk # 2: Ada piala yang berbeda untuk dimenangkan juga, ayo semangat memilih makanan sehat!\n");
+            tv.append("\n");
+            tv.append("Credits:\n");
+            tv.append("Yayasan Balita Sehat acknowledges the usage of images from internet. For any complain of the image usage, please email to info@fmch-indonesia.org");
         }
+
         GradientDrawable gd = new GradientDrawable();
         gd.setColor(Color.BLACK); // Changes this drawbale to use a single color instead of a gradient
         gd.setCornerRadius(5);
