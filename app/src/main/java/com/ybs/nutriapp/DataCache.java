@@ -52,7 +52,7 @@ public class DataCache {
         String foodCategory = "";
         randomGenerator = new Random();
         int randomNumber = randomGenerator.nextInt(5);
-        if (randomNumber >= 1)
+        if (randomNumber >= 2)
         {
             foodCategory = "food";
         } else {

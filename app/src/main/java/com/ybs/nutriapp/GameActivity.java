@@ -6,6 +6,8 @@ import android.graphics.Point;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
+import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.Gravity;
@@ -17,12 +19,15 @@ public class GameActivity extends Activity {
 
     // Our object to handle the View
     private TDView gameView;
-
+    //Background music
+    BackgroundSound mBackgroundSound = new BackgroundSound();
     // This is where the "Play" button from HomeActivity sends us
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        //mBackgroundSound.execute();
         // Get a Display object to access screen details
         Display display = getWindowManager().getDefaultDisplay();
         // Load the resolution into a Point object
@@ -89,6 +94,7 @@ public class GameActivity extends Activity {
     protected void onPause() {
         super.onPause();
         gameView.pause();
+        mBackgroundSound.cancel(true);
     }
 
     // If the Activity is resumed make sure to resume our thread
@@ -96,6 +102,22 @@ public class GameActivity extends Activity {
     protected void onResume() {
         super.onResume();
         gameView.resume();
+        mBackgroundSound.execute();
+
+    }
+
+    public class BackgroundSound extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            MediaPlayer player = MediaPlayer.create(GameActivity.this, R.raw.background);
+            player.setLooping(true); // Set looping
+            player.setVolume(1.0f, 1.0f);
+            player.start();
+
+            return null;
+        }
+
     }
 
 

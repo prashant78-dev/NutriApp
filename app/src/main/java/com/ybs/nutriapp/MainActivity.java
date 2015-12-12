@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
@@ -27,9 +29,13 @@ public class MainActivity extends Activity
     PopupWindow popUp;
     LinearLayout mainLayout;
     TextView tv;
+    BackgroundSound mBackgroundSound = new BackgroundSound();
     // This is the entry point to our game
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+        mBackgroundSound.execute();
         super.onCreate(savedInstanceState);
 
         //Here we set our UI layout as the view
@@ -228,4 +234,18 @@ public class MainActivity extends Activity
                 popUp.update(50, 50, 800, 400);
         }
     }
+    public class BackgroundSound extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            MediaPlayer player = MediaPlayer.create(MainActivity.this, R.raw.background);
+            player.setLooping(true); // Set looping
+            player.setVolume(1.0f, 1.0f);
+            player.start();
+
+            return null;
+        }
+
+    }
+
 }

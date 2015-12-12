@@ -12,10 +12,14 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.os.AsyncTask;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -1249,4 +1253,8 @@ public class TDView extends SurfaceView implements Runnable {
             return false;
         }
     }
+
+
 }
+
+
