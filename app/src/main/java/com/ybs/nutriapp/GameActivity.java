@@ -6,7 +6,6 @@ import android.graphics.Point;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
-import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Display;
@@ -14,20 +13,19 @@ import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.media.MediaPlayer;
 
 public class GameActivity extends Activity {
 
     // Our object to handle the View
     private TDView gameView;
-    //Background music
+
     BackgroundSound mBackgroundSound = new BackgroundSound();
     // This is where the "Play" button from HomeActivity sends us
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        //mBackgroundSound.execute();
         // Get a Display object to access screen details
         Display display = getWindowManager().getDefaultDisplay();
         // Load the resolution into a Point object
@@ -50,7 +48,7 @@ public class GameActivity extends Activity {
         // Adds the drawable to your progressBar
         ClipDrawable progress = new ClipDrawable(pgDrawable, Gravity.LEFT, ClipDrawable.HORIZONTAL);
         pbr.setProgressDrawable(progress);pbr.setBackgroundColor(Color.RED);
-        gameView = new TDView(this, size.x, size.y, pbr);
+        gameView = new TDView(this, size.x, size.y, pbr, display.getWidth(), display.getHeight());
         // Make our gameView the view for the Activity
         //setContentView(gameView);
         setContentView(gameView);
@@ -62,7 +60,7 @@ public class GameActivity extends Activity {
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
         linearLayoutParams.gravity= Gravity.BOTTOM;
-        linearLayoutParams.setMargins(20, 550, 0, 0);
+        linearLayoutParams.setMargins(20, (int)(display.getHeight()/1.5), 0, 0);
         anotherLayout.setOrientation(LinearLayout.VERTICAL);
         //anotherLayout.removeView(MainActivity.pbr);
         TextView power = new TextView(this);
@@ -72,7 +70,8 @@ public class GameActivity extends Activity {
         LinearLayout.LayoutParams params1 =
                 new LinearLayout.LayoutParams(200, 50);
         //params1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
-        params1.setMargins(50, 550, 100, 200);
+
+        params1.setMargins(50, (int)(display.getHeight()/1.5), 100, display.getHeight()/25);
         //power.setLayoutParams(params1);
         LinearLayout lv = new LinearLayout(this);
         lv.setOrientation(LinearLayout.VERTICAL);
@@ -103,7 +102,6 @@ public class GameActivity extends Activity {
         super.onResume();
         gameView.resume();
         mBackgroundSound.execute();
-
     }
 
     public class BackgroundSound extends AsyncTask<Void, Void, Void> {
@@ -119,6 +117,4 @@ public class GameActivity extends Activity {
         }
 
     }
-
-
 }

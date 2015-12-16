@@ -12,14 +12,10 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
-import android.os.AsyncTask;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -29,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -37,10 +34,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class TDView extends SurfaceView implements Runnable {
-    private static Random randomGenerator;
+
     //For the FX
     private SoundPool soundPool;
     int start = -1;
@@ -87,12 +83,18 @@ public class TDView extends SurfaceView implements Runnable {
     private List<FoodItem> clickedItems = new ArrayList<>();
     LinearLayout mainLayout;
     ProgressBar pbr;
-    TDView(Context context, int x, int y, ProgressBar pbr) {
+    int width;
+    int height;
+    TDView(Context context, int x, int y, ProgressBar pbr, int width, int height) {
         super(context);
         this.context  = context;
         DataCache.init(context);
         FoodItem.maxX=x;
         this.pbr=pbr;
+        this.height=height;
+        this.width=width;
+        System.out.println("heeigghhhhttttttttttt "+height);
+        System.out.println("wiiiddddtttthhhhhh "+width);
         // This SoundPool is deprecated but don't worry
         soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC,0);
         try{
@@ -178,23 +180,21 @@ public class TDView extends SurfaceView implements Runnable {
                 Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
                 double htConversion = 1.0;
                 double widthConversion = 1.0;
-                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                htConversion=height/3;
+                widthConversion=width/5;
                 gfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                        (int) Math.min(htConversion, widthConversion),
+                        (int) Math.min(htConversion, widthConversion),
                         false));
                 BadFoodItem bfi = bag.getBadFoodItem();
                 fld = klass.getDeclaredField(bfi.getFileName());
                 resource_id = (Integer)fld.get(null);
                 bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
-                htConversion = 1.0;
-                widthConversion = 1.0;
-                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                htConversion=height/3;
+                widthConversion=width/5;
                 bfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                        (int) Math.min(htConversion, widthConversion),
+                        (int) Math.min(htConversion, widthConversion),
                         false));
             }
             itemsToBeDisplayed.addAll(bags);
@@ -224,40 +224,10 @@ public class TDView extends SurfaceView implements Runnable {
                 canvas.drawColor(Color.argb(255, 0, 0, 0));
                 canvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.plainbackground), 0, 0, paint);
                 Bitmap endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy);
-                randomGenerator = new Random();
-                int randomNumber = randomGenerator.nextInt(11);
-
-                switch (randomNumber)
-                {
-                    case 1:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy1);
-                        break;
-                    case 2:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy2);
-                        break;
-                    case 3:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy3);
-                        break;
-                    case 4:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy4);
-                        break;
-                    case 5:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy5);
-                        break;
-                    case 6:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy6);
-                        break;
-                    case 7:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy7);
-                        break;
-                    case 8:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy8);
-                        break;
-                    case 9:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy9);
-                        break;
-                    case 10:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy10);
-                        break;
-                    default:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy);
-                        break;
-
-                }
-
-                canvas.drawBitmap(endBitMap, 400, 300, paint);
+                canvas.drawBitmap(endBitMap, width/3, height/3, paint);
                 paint.setColor(Color.argb(255, 255, 255, 255));
                 paint.setTextSize(25);
-                canvas.drawText("HOREEE! KAMU MENANG! TETAP PILIH MAKANAN SEHAT YAâ€¦!", 200, 50, paint);
+                canvas.drawText("HOREEE! KAMU MENANG! TETAP PILIH MAKANAN SEHAT YAÃ¢â‚¬Â¦!", width/5, height/15, paint);
                 ourHolder.unlockCanvasAndPost(canvas);
                 return;
             }
@@ -266,36 +236,7 @@ public class TDView extends SurfaceView implements Runnable {
                 canvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.plainbackground), 0, 0, paint);
                 canvas.drawColor(Color.argb(255, 0, 0, 0));
                 Bitmap endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy);
-                randomGenerator = new Random();
-                int randomNumber = randomGenerator.nextInt(11);
-
-                switch (randomNumber)
-                {
-                    case 1:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy1);
-                        break;
-                    case 2:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy2);
-                        break;
-                    case 3:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy3);
-                        break;
-                    case 4:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy4);
-                        break;
-                    case 5:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy5);
-                        break;
-                    case 6:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy6);
-                        break;
-                    case 7:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy7);
-                        break;
-                    case 8:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy8);
-                        break;
-                    case 9:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy9);
-                        break;
-                    case 10:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy10);
-                        break;
-                    default:endBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.trophy);
-                        break;
-
-                }
-                end = new Button(550, 300, endBitMap);
+                end = new Button(width/3, height/3, endBitMap);
                 canvas.drawBitmap(endBitMap, end.x, end.y, paint);
                 ourHolder.unlockCanvasAndPost(canvas);
                 gameEnded=true;
@@ -341,17 +282,17 @@ public class TDView extends SurfaceView implements Runnable {
 
                 // White specs of dust
                 paint.setColor(Color.argb(255, 255, 255, 255));
-                paint.setTextSize(25);
+                paint.setTextSize(height/15);
                 // Draw the player
                 Bag bag = itemsToBeDisplayed.remove(0);
 
-                canvas.drawText("KAMU PILIH YANG MANA?", 200, 50, paint);
+                canvas.drawText("KAMU PILIH YANG MANA?", width/5, height/15, paint);
                 if(Math.random()>0.5) {
-                    bag.getGoodFoodItem().setX(300);bag.getGoodFoodItem().setY(200);
-                    bag.getBadFoodItem().setX(700);bag.getBadFoodItem().setY(200);
+                    bag.getGoodFoodItem().setX(width/5);bag.getGoodFoodItem().setY(height/3);
+                    bag.getBadFoodItem().setX(3*width/5);bag.getBadFoodItem().setY(height/3);
                 } else {
-                    bag.getGoodFoodItem().setX(700);bag.getGoodFoodItem().setY(200);
-                    bag.getBadFoodItem().setX(300);bag.getBadFoodItem().setY(200);
+                    bag.getGoodFoodItem().setX(3*width/5);bag.getGoodFoodItem().setY(height/3);
+                    bag.getBadFoodItem().setX(width/5);bag.getBadFoodItem().setY(height/3);
                 }
                 canvas.drawBitmap(bag.getGoodFoodItem().getBitmap(), bag.getGoodFoodItem().getX(),
                         bag.getGoodFoodItem().getY(), paint);
@@ -360,7 +301,7 @@ public class TDView extends SurfaceView implements Runnable {
                     int breaks = foodName.length()/17;
                     int start=0;
                     int end=17;
-                    int yCord=25;
+                    int yCord=height/15;
                     for(int ii=0;ii<breaks;ii++) {
                         String text = foodName.substring(start, end);
                         int endPoint = Math.max(text.lastIndexOf(" "), text.lastIndexOf(","));
@@ -377,7 +318,7 @@ public class TDView extends SurfaceView implements Runnable {
                 }
                 else {
                     canvas.drawText(foodName, bag.getGoodFoodItem().getX(),
-                            bag.getGoodFoodItem().getY() + bag.getGoodFoodItem().getBitmap().getHeight() + 25, paint);
+                            bag.getGoodFoodItem().getY() + bag.getGoodFoodItem().getBitmap().getHeight() + height/15, paint);
                 }
                 canvas.drawBitmap(bag.getBadFoodItem().getBitmap(), bag.getBadFoodItem().getX(),
                         bag.getBadFoodItem().getY(), paint);
@@ -386,7 +327,7 @@ public class TDView extends SurfaceView implements Runnable {
                     int breaks = foodName.length()/17;
                     int start=0;
                     int end=17;
-                    int yCord=25;
+                    int yCord=height/15;
                     for(int ii=0;ii<breaks;ii++) {
                         String text = foodName.substring(start, end);
                         int endPoint = Math.max(text.lastIndexOf(" "), text.lastIndexOf(","));
@@ -394,7 +335,7 @@ public class TDView extends SurfaceView implements Runnable {
                         String displayString = foodName.substring(start,start+endPoint);
                         canvas.drawText(displayString, bag.getBadFoodItem().getX(),
                                 bag.getBadFoodItem().getY() + bag.getBadFoodItem().getBitmap().getHeight() + yCord, paint);
-                        yCord+=25;
+                        yCord+=height/15;
                         start+=endPoint;
                         end=Math.min(start+17,foodName.length());
                     }
@@ -403,14 +344,14 @@ public class TDView extends SurfaceView implements Runnable {
                 }
                 else {
                     canvas.drawText(foodName, bag.getBadFoodItem().getX(),
-                            bag.getBadFoodItem().getY() + bag.getBadFoodItem().getBitmap().getHeight() + 25, paint);
+                            bag.getBadFoodItem().getY() + bag.getBadFoodItem().getBitmap().getHeight() + height/15, paint);
                 }
                 itemsDisplayed.add(bag);
                 if(replayLevelButton==null){
                     Bitmap replayBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.replaygame);
-                    replayLevelButton = new Button(900, 640, Bitmap.createScaledBitmap(replayBitMap,
-                            replayBitMap.getWidth(),
-                            replayBitMap.getHeight(),
+                    replayLevelButton = new Button(29*width/32, 9*height/10, Bitmap.createScaledBitmap(replayBitMap,
+                            width/15,
+                            height/15,
                             false));
                 }
                 /*if(!view.equals("ItemDetails") && !(levelRunning==1 && itemsDisplayed.size()==1)) {
@@ -419,7 +360,7 @@ public class TDView extends SurfaceView implements Runnable {
 
                 if(!backMap.containsKey(view)) {
                     Bitmap backBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.back_button);
-                    Button backButton = new Button(800, 440, Bitmap.createScaledBitmap(backBitMap,
+                    Button backButton = new Button(2*width/3, 5*height/6, Bitmap.createScaledBitmap(backBitMap,
                             replayLevelButton.bitMap.getHeight(),
                             replayLevelButton.bitMap.getHeight(),
                             false));
@@ -463,10 +404,10 @@ public class TDView extends SurfaceView implements Runnable {
                 canvas = ourHolder.lockCanvas();
                 canvas.drawColor(Color.argb(255, 0, 0, 0));
                 canvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.plainbackground), 0, 0, paint);
-                int starterrX = 10;
+                int starterrX = width/16;
                 boolean allGood=true;
 
-                canvas.drawText("INI ADALAH PILIHANMU. KLIK GAMBAR LAGI UNTUK MENGINGAT PILIHANMU SEHAT ATAU TIDAK.", 50, 50,
+                canvas.drawText("INI ADALAH PILIHANMU. KLIK GAMBAR LAGI UNTUK MENGINGAT PILIHANMU SEHAT ATAU TIDAK.", width/20, height/15,
                         paint);
                 int Y=100;
                 for (FoodItem obj : selectedItems) {
@@ -474,11 +415,16 @@ public class TDView extends SurfaceView implements Runnable {
                         allGood=false;
                     }
                     if(obj==selectedItems.get(selectedItems.size()/2)) {
-                        Y=400;starterrX=50;
+                        Y=height/2;starterrX=width/16;
                     }
                     obj.setX(starterrX);
                     obj.setY(Y);
-                    canvas.drawBitmap(obj.getBitmap(), starterrX, Y, paint);
+                    double htConversion=height/5;
+                    double widthConversion=width/8;
+                    canvas.drawBitmap(Bitmap.createScaledBitmap(obj.getBitmap(),
+                            (int) Math.min(htConversion, widthConversion),
+                            (int) Math.min(htConversion, widthConversion),
+                            false), starterrX, Y, paint);
                     String foodName = obj.getTransFoodName();
                     if(foodName.length()>17) {
                         int breaks = foodName.length()/17;
@@ -491,19 +437,19 @@ public class TDView extends SurfaceView implements Runnable {
                             endPoint=Math.max(endPoint,text.lastIndexOf("."));
                             String displayString = foodName.substring(start,start+endPoint);
                             canvas.drawText(displayString, starterrX,
-                                    Y + obj.getBitmap().getHeight() + yCord, paint);
+                                    Y + height/5 + yCord, paint);
                             yCord+=25;
                             start+=endPoint;
                             end=Math.min(start+17,foodName.length());
                         }
                         canvas.drawText(foodName.substring(start, end), starterrX,
-                                Y + obj.getBitmap().getHeight() + yCord, paint);
+                                Y + height/5 + yCord, paint);
                     }
                     else {
                         canvas.drawText(foodName, starterrX,
-                                Y + obj.getBitmap().getHeight() + 25, paint);
+                                Y + height/5 + 25, paint);
                     }
-                    starterrX+=200;
+                    starterrX+=3*width/16;
                 }
 
                 /*if(!backMap.containsKey(view)) {
@@ -546,7 +492,7 @@ public class TDView extends SurfaceView implements Runnable {
                 canvas = ourHolder.lockCanvas();
                 canvas.drawColor(Color.argb(255, 0, 0, 0));
                 canvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.plainbackground), 0, 0, paint);
-                canvas.drawBitmap(itemForDetail.getBitmap(), 200, 400, paint);
+                canvas.drawBitmap(itemForDetail.getBitmap(), 200, 300, paint);
                 String foodName = itemForDetail.getTransFoodName();
                 if(foodName.length()>17) {
                     int breaks = foodName.length()/17;
@@ -558,15 +504,15 @@ public class TDView extends SurfaceView implements Runnable {
                         int endPoint = Math.max(text.lastIndexOf(" "), text.lastIndexOf(","));
                         endPoint=Math.max(endPoint,text.lastIndexOf("."));
                         String displayString = foodName.substring(start,start+endPoint);
-                        canvas.drawText(displayString, 200, 400 + itemForDetail.getBitmap().getHeight() + yCord, paint);
+                        canvas.drawText(displayString, 200, 300 + itemForDetail.getBitmap().getHeight() + yCord, paint);
                         yCord+=25;
                         start+=endPoint;
                         end=Math.min(start+17,foodName.length());
                     }
-                    canvas.drawText(foodName.substring(start, end), 200, 400 + itemForDetail.getBitmap().getHeight() + yCord, paint);
+                    canvas.drawText(foodName.substring(start, end), 200, 300 + itemForDetail.getBitmap().getHeight() + yCord, paint);
                 }
                 else {
-                    canvas.drawText(foodName, 200, 400 + itemForDetail.getBitmap().getHeight() + 25, paint);
+                    canvas.drawText(foodName, 200, 300 + itemForDetail.getBitmap().getHeight() + 25, paint);
                 }
                 String foodDesc = itemForDetail.getFoodDescription();
                 if(foodDesc.length()>70) {
@@ -579,19 +525,19 @@ public class TDView extends SurfaceView implements Runnable {
                         int endPoint = Math.max(text.lastIndexOf(" "), text.lastIndexOf(","));
                         endPoint=Math.max(endPoint,text.lastIndexOf("."));
                         String displayString = foodDesc.substring(start,start+endPoint);
-                        canvas.drawText(displayString, 200, 150+yCord, paint);
+                        canvas.drawText(displayString, width/5, 150+yCord, paint);
                         yCord+=25;
                         start+=endPoint;
                         end=Math.min(start+70,foodDesc.length());
                     }
-                    canvas.drawText(foodDesc.substring(start, end), 200, 150 + yCord, paint);
+                    canvas.drawText(foodDesc.substring(start, end), width/5, 150 + yCord, paint);
                 }
                 else {
-                    canvas.drawText(foodDesc, 200, 150, paint);
+                    canvas.drawText(foodDesc, width/5, 150, paint);
                 }
                 if(!backMap.containsKey(view)) {
                     Bitmap backBitMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.back_button);
-                    Button backButton = new Button(800, 640, Bitmap.createScaledBitmap(backBitMap,
+                    Button backButton = new Button(2*width/3, 8*height/9, Bitmap.createScaledBitmap(backBitMap,
                             replayLevelButton.bitMap.getHeight(),
                             replayLevelButton.bitMap.getHeight(),
                             false));
@@ -648,23 +594,22 @@ public class TDView extends SurfaceView implements Runnable {
                             Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
                             double htConversion = 1.0;
                             double widthConversion = 1.0;
-                            if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                            if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                            htConversion=height/3;
+                            widthConversion=width/5;
                             gfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                    (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                    (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                    (int) Math.min(htConversion, widthConversion),
+                                    (int) Math.min(htConversion, widthConversion),
                                     false));
+
                             BadFoodItem bfi = bag.getBadFoodItem();
                             fld = klass.getDeclaredField(bfi.getFileName());
                             resource_id = (Integer)fld.get(null);
                             bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
-                            htConversion = 1.0;
-                            widthConversion = 1.0;
-                            if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                            if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                            htConversion=height/3;
+                            widthConversion=width/5;
                             bfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                    (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                    (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                    (int) Math.min(htConversion, widthConversion),
+                                    (int) Math.min(htConversion, widthConversion),
                                     false));
                         }
                         itemsToBeDisplayed.addAll(bags);
@@ -769,7 +714,7 @@ public class TDView extends SurfaceView implements Runnable {
                             TextView greenText = new TextView(context);
                             greenText.setTextColor(Color.GREEN);
                             greenText.setTextSize(40);
-                            greenText.setText("SEHAT");
+                            greenText.setText("â€œSEHATâ€");
                             header.addView(greenText, params1);
                             tv.append("\n");
                             tv.append("\n");
@@ -830,7 +775,11 @@ public class TDView extends SurfaceView implements Runnable {
                             layout.addView(header);
                             layout.addView(tv, params1);
                             android.widget.Button okButton = new android.widget.Button(context);
-                            okButton.setX(375);
+                            okButton.setMinWidth(height/7);
+                            okButton.setMinHeight(height/7);
+
+                            okButton.setX(width/3-width/40);
+                            //okButton.setY(100);
                             //okButton.setY(50+(10-lineCount)*30);
                             okButton.setText("OK");
                             okButton.setOnClickListener(new OnClickListener() {
@@ -843,16 +792,21 @@ public class TDView extends SurfaceView implements Runnable {
                                     }
                                 }
                             });
-                            layout.addView(okButton, 50, 50);
+                            layout.addView(okButton, width / 20, width / 20);
                             GradientDrawable gd = new GradientDrawable();
                             gd.setColor(Color.BLACK); // Changes this drawbale to use a single color instead of a gradient
                             gd.setCornerRadius(5);
                             gd.setStroke(1, Color.WHITE);
                             layout.setBackgroundDrawable(gd);
                             layout.setBackgroundResource(R.drawable.plainbackground);
-                            popUp.setContentView(layout);
+                            ScrollView cView = new ScrollView(context);
+                            cView.setScrollbarFadingEnabled(false);
+                            cView.setVerticalScrollBarEnabled(true);
+                            cView.setVerticalFadingEdgeEnabled(false);
+                            cView.addView(layout);
+                            popUp.setContentView(cView);
                             popUp.showAtLocation(mainLayout, Gravity.CENTER, 10, 10);
-                            popUp.update(50, 50, 800, 450);
+                            popUp.update(width/20, width/20, 2*width/3, 2*height/3);
                         }
                         if (bag.getBadFoodItem().isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
                             selectedItems.add(bag.getBadFoodItem());
@@ -888,7 +842,7 @@ public class TDView extends SurfaceView implements Runnable {
                             TextView greenText = new TextView(context);
                             greenText.setTextColor(Color.RED);
                             greenText.setTextSize(40);
-                            greenText.setText("KURANG SEHAT");
+                            greenText.setText("â€œKURANG SEHATâ€");
                             header.addView(greenText, params1);
                             tv.append("\n");
                             tv.append("\n");
@@ -950,8 +904,11 @@ public class TDView extends SurfaceView implements Runnable {
                             layout.addView(header);
                             layout.addView(tv, params);
                             android.widget.Button okButton = new android.widget.Button(context);
+                            okButton.setMinWidth(height/7);
+                            okButton.setMinHeight(height/7);
 
-                            okButton.setX(375);
+                            okButton.setX(width/3-width/40);
+                            //okButton.setY(100);
                             //okButton.setY(50+(10-lineCount)*30);
                             okButton.setText("OK");
                             okButton.setOnClickListener(new OnClickListener() {
@@ -964,16 +921,21 @@ public class TDView extends SurfaceView implements Runnable {
                                     }
                                 }
                             });
-                            layout.addView(okButton, 50, 50);
+                            layout.addView(okButton, width / 20, width / 20);
                             GradientDrawable gd = new GradientDrawable();
                             gd.setColor(Color.BLACK); // Changes this drawbale to use a single color instead of a gradient
                             gd.setCornerRadius(5);
                             gd.setStroke(1, Color.WHITE);
                             layout.setBackgroundDrawable(gd);
                             layout.setBackgroundResource(R.drawable.plainbackground);
-                            popUp.setContentView(layout);
+                            ScrollView cView = new ScrollView(context);
+                            cView.setScrollbarFadingEnabled(false);
+                            cView.setVerticalScrollBarEnabled(true);
+                            cView.setVerticalFadingEdgeEnabled(false);
+                            cView.addView(layout);
+                            popUp.setContentView(cView);
                             popUp.showAtLocation(mainLayout, Gravity.CENTER, 10, 10);
-                            popUp.update(50, 50, 800, 450);
+                            popUp.update(width/20, width/20, 2*width/3, 2*height/3);
                         }
                         if (backMap.get(view).isTouched((int) motionEvent.getX(), (int) motionEvent.getY())) {
                             if(index==0) return true;
@@ -998,23 +960,21 @@ public class TDView extends SurfaceView implements Runnable {
                                 Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
                                 double htConversion = 1.0;
                                 double widthConversion = 1.0;
-                                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                                htConversion=height/3;
+                                widthConversion=width/5;
                                 gfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                        (int) Math.min(htConversion, widthConversion),
+                                        (int) Math.min(htConversion, widthConversion),
                                         false));
                                 BadFoodItem bfi = bagg.getBadFoodItem();
                                 fld = klass.getDeclaredField(bfi.getFileName());
                                 resource_id = (Integer)fld.get(null);
                                 bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
-                                htConversion = 1.0;
-                                widthConversion = 1.0;
-                                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                                htConversion=height/3;
+                                widthConversion=width/5;
                                 bfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                        (int) Math.min(htConversion, widthConversion),
+                                        (int) Math.min(htConversion, widthConversion),
                                         false));
                             }
                             itemsToBeDisplayed.addAll(bags);
@@ -1061,23 +1021,21 @@ public class TDView extends SurfaceView implements Runnable {
                                 Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
                                 double htConversion = 1.0;
                                 double widthConversion = 1.0;
-                                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                                htConversion=height/3;
+                                widthConversion=width/5;
                                 gfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                        (int) Math.min(htConversion, widthConversion),
+                                        (int) Math.min(htConversion, widthConversion),
                                         false));
                                 BadFoodItem bfi = bag.getBadFoodItem();
                                 fld = klass.getDeclaredField(bfi.getFileName());
                                 resource_id = (Integer)fld.get(null);
                                 bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
-                                htConversion = 1.0;
-                                widthConversion = 1.0;
-                                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                                htConversion=height/3;
+                                widthConversion=width/5;
                                 bfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                        (int) Math.min(htConversion, widthConversion),
+                                        (int) Math.min(htConversion, widthConversion),
                                         false));
                             }
                             itemsToBeDisplayed.addAll(bags);
@@ -1109,23 +1067,21 @@ public class TDView extends SurfaceView implements Runnable {
                                 Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
                                 double htConversion = 1.0;
                                 double widthConversion = 1.0;
-                                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                                htConversion=height/3;
+                                widthConversion=width/5;
                                 gfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                        (int) Math.min(htConversion, widthConversion),
+                                        (int) Math.min(htConversion, widthConversion),
                                         false));
                                 BadFoodItem bfi = bagg.getBadFoodItem();
                                 fld = klass.getDeclaredField(bfi.getFileName());
                                 resource_id = (Integer)fld.get(null);
                                 bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
-                                htConversion = 1.0;
-                                widthConversion = 1.0;
-                                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                                htConversion=height/3;
+                                widthConversion=width/5;
                                 bfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                        (int) Math.min(htConversion, widthConversion),
+                                        (int) Math.min(htConversion, widthConversion),
                                         false));
                             }
                             itemsToBeDisplayed.addAll(bags);
@@ -1160,23 +1116,21 @@ public class TDView extends SurfaceView implements Runnable {
                                 Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
                                 double htConversion = 1.0;
                                 double widthConversion = 1.0;
-                                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                                htConversion=height/3;
+                                widthConversion=width/5;
                                 gfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                        (int) Math.min(htConversion, widthConversion),
+                                        (int) Math.min(htConversion, widthConversion),
                                         false));
                                 BadFoodItem bfi = bag.getBadFoodItem();
                                 fld = klass.getDeclaredField(bfi.getFileName());
                                 resource_id = (Integer)fld.get(null);
                                 bm = BitmapFactory.decodeResource(context.getResources(), resource_id);
-                                htConversion = 1.0;
-                                widthConversion = 1.0;
-                                if(bm.getHeight()>200) htConversion=bm.getHeight()/200.0;
-                                if(bm.getWidth()>200) widthConversion=bm.getWidth()/200.0;
+                                htConversion=height/3;
+                                widthConversion=width/5;
                                 bfi.setHitbox(200, 200, Bitmap.createScaledBitmap(bm,
-                                        (int) (bm.getWidth() / Math.max(htConversion,widthConversion)),
-                                        (int) (bm.getHeight() / Math.max(htConversion,widthConversion)),
+                                        (int) Math.min(htConversion, widthConversion),
+                                        (int) Math.min(htConversion, widthConversion),
                                         false));
                             }
                             itemsToBeDisplayed.addAll(bags);
@@ -1253,8 +1207,4 @@ public class TDView extends SurfaceView implements Runnable {
             return false;
         }
     }
-
-
 }
-
-
